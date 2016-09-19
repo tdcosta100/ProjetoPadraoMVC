@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+
+<head>
+
+    <title>Upload Image</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <script type="text/javascript" src="http://www.ajax-cross-origin.com/js/jquery.ajax-cross-origin.min.js"></script>
+
+    <script type="text/javascript">
+
+    
+
+var bucket = 'testseries-testing';
+
+    
+
+    window.onload = function() {
+
+bucket = sessionStorage.getItem('bucket');
+
+}
+
+    $(document).ready(function() {
+
+    
+
+    /**File upload segment*/
+
+    var file = $('[name="file_thumb"]');
+
+   
+
+    $('#btnUpload').on('click', function() {
+
+        var filename = $.trim(file.val());
+
+       
+
+        $.ajax({
+
+            url: '/uploadFile/'+bucket,
+
+            type: "POST",
+
+            data: new FormData(document.getElementById("fileForm")),
+
+            enctype: 'multipart/form-data',
+
+            processData: false,
+
+            contentType: false,
+
+            crossOrigin : true,
+
+            beforeSend: function() {
+
+      $('#btnUpload').text('Uploading...') ;
+
+    },
+
+    success: function(data) {
+
+      window.prompt("Copy to clipboard: Ctrl+C, Enter", data.data);
+
+          //    alert(data.data);
+
+              $('#btnUpload').text('Uploaded') ;
+
+              sessionStorage.setItem('href',data.data);
+
+              window.top.close();
+
+            },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+
+      alert("Sorry image could not be uploaded");
+
+    }
+
+        });
+
+    });
+
+    });
+
+    </script>
+
+
+
+</head>
+
+<body>
+
+<form id="fileForm">
+
+Upload Image : 
+
+    <input type="file" name="file_thumb" />
+
+    <button id="btnUpload" type="button" >Upload file</button>
+
+</form>
+
+</body>
+
+
+
+</html>

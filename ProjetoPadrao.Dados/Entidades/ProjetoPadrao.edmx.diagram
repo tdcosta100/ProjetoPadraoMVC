@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="86023a1ff5a24a81bd68e5387bb80696" Name="Diagram1">
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Arquivo" Width="1.5" PointX="2.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Audio" Width="1.5" PointX="0.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Categoria" Width="1.5" PointX="7.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Conteudo" Width="1.5" PointX="7.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Documento" Width="1.5" PointX="0.5" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Galeria" Width="1.5" PointX="9.5" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.GaleriaConteudo" Width="1.5" PointX="9.5" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.GrupoIdioma" Width="1.5" PointX="9.5" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Idioma" Width="1.5" PointX="9.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Imagem" Width="1.5" PointX="5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Midia" Width="1.5" PointX="2.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.MidiaGaleria" Width="1.5" PointX="7.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Template" Width="1.5" PointX="5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Video" Width="1.5" PointX="2.75" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_Categoria_Categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_Categoria_GrupoIdioma" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_Categoria_Idioma" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_Categoria_Template" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_Conteudo_GrupoIdioma" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_Conteudo_Idioma" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_Conteudo_Imagem" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_Conteudo_Template" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_GaleriaConteudo_Conteudo" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_GaleriaConteudo_Galeria" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_MidiaGaleria_Galeria" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_Template_Imagem" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_MidiaGaleria_Midia" ManuallyRouted="false" />
+        <InheritanceConnector EntityType="ProjetoPadrao.Dados.Entidades.Documento" />
+        <InheritanceConnector EntityType="ProjetoPadrao.Dados.Entidades.Midia" />
+        <InheritanceConnector EntityType="ProjetoPadrao.Dados.Entidades.Audio" />
+        <InheritanceConnector EntityType="ProjetoPadrao.Dados.Entidades.Video" />
+        <InheritanceConnector EntityType="ProjetoPadrao.Dados.Entidades.Video" />
+        <InheritanceConnector EntityType="ProjetoPadrao.Dados.Entidades.Imagem" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

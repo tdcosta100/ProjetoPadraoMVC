@@ -1,0 +1,972 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProjetoPadrao.Dados.Entidades.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Arquivo">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+          </Key>
+          <Property Name="IdArquivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Extensao" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Tamanho" Type="bigint" Nullable="false" />
+          <Property Name="Descricao" Type="text" />
+          <Property Name="TipoArquivo" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Audio">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+          </Key>
+          <Property Name="IdArquivo" Type="int" Nullable="false" />
+          <Property Name="Duracao" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="URL" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="HTML" Type="text" />
+          <Property Name="Ativa" Type="bit" Nullable="false" />
+          <Property Name="IdCategoriaPai" Type="int" />
+          <Property Name="IdTemplate" Type="int" Nullable="false" />
+          <Property Name="IdGrupoIdioma" Type="int" Nullable="false" />
+          <Property Name="IdIdioma" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Conteudo">
+          <Key>
+            <PropertyRef Name="IdConteudo" />
+          </Key>
+          <Property Name="IdConteudo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="URL" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Chamada" Type="nvarchar" MaxLength="500" />
+          <Property Name="HTML" Type="text" Nullable="false" />
+          <Property Name="DataCriacao" Type="datetime" Nullable="false" />
+          <Property Name="DataModificacao" Type="datetime" />
+          <Property Name="DataPublicacao" Type="datetime" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="IdTemplate" Type="int" Nullable="false" />
+          <Property Name="IdArquivoImagemChamada" Type="int" />
+          <Property Name="IdGrupoIdioma" Type="int" Nullable="false" />
+          <Property Name="IdIdioma" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+          </Key>
+          <Property Name="IdArquivo" Type="int" Nullable="false" />
+          <Property Name="TipoDocumento" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Galeria">
+          <Key>
+            <PropertyRef Name="IdGaleria" />
+          </Key>
+          <Property Name="IdGaleria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="500" />
+          <Property Name="Descricao" Type="text" />
+        </EntityType>
+        <EntityType Name="GaleriaConteudo">
+          <Key>
+            <PropertyRef Name="IdGaleria" />
+            <PropertyRef Name="IdConteudo" />
+          </Key>
+          <Property Name="IdGaleria" Type="int" Nullable="false" />
+          <Property Name="IdConteudo" Type="int" Nullable="false" />
+          <Property Name="Ordem" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GrupoIdioma">
+          <Key>
+            <PropertyRef Name="IdGrupoIdioma" />
+          </Key>
+          <Property Name="IdGrupoIdioma" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoGrupoIdioma" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Idioma">
+          <Key>
+            <PropertyRef Name="IdIdioma" />
+          </Key>
+          <Property Name="IdIdioma" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sigla" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Imagem">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+          </Key>
+          <Property Name="IdArquivo" Type="int" Nullable="false" />
+          <Property Name="Largura" Type="int" Nullable="false" />
+          <Property Name="Altura" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Midia">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+          </Key>
+          <Property Name="IdArquivo" Type="int" Nullable="false" />
+          <Property Name="TipoMidia" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MidiaGaleria">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+            <PropertyRef Name="IdGaleria" />
+          </Key>
+          <Property Name="IdArquivo" Type="int" Nullable="false" />
+          <Property Name="IdGaleria" Type="int" Nullable="false" />
+          <Property Name="Ordem" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Template">
+          <Key>
+            <PropertyRef Name="IdTemplate" />
+          </Key>
+          <Property Name="IdTemplate" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Alias" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="HTML" Type="text" Nullable="false" />
+          <Property Name="ParseHTML" Type="bit" Nullable="false" />
+          <Property Name="IdArquivoImagemMiniatura" Type="int" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+          </Key>
+          <Property Name="IdArquivo" Type="int" Nullable="false" />
+          <Property Name="Largura" Type="int" Nullable="false" />
+          <Property Name="Altura" Type="int" Nullable="false" />
+          <Property Name="Duracao" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Audio_Midia">
+          <End Role="Midia" Type="Self.Midia" Multiplicity="1" />
+          <End Role="Audio" Type="Self.Audio" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Midia">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="Audio">
+              <PropertyRef Name="IdArquivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categoria_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Categoria1" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Categoria1">
+              <PropertyRef Name="IdCategoriaPai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categoria_GrupoIdioma">
+          <End Role="GrupoIdioma" Type="Self.GrupoIdioma" Multiplicity="1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GrupoIdioma">
+              <PropertyRef Name="IdGrupoIdioma" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="IdGrupoIdioma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categoria_Idioma">
+          <End Role="Idioma" Type="Self.Idioma" Multiplicity="1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Idioma">
+              <PropertyRef Name="IdIdioma" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="IdIdioma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categoria_Template">
+          <End Role="Template" Type="Self.Template" Multiplicity="1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="IdTemplate" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="IdTemplate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conteudo_GrupoIdioma">
+          <End Role="GrupoIdioma" Type="Self.GrupoIdioma" Multiplicity="1" />
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GrupoIdioma">
+              <PropertyRef Name="IdGrupoIdioma" />
+            </Principal>
+            <Dependent Role="Conteudo">
+              <PropertyRef Name="IdGrupoIdioma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conteudo_Idioma">
+          <End Role="Idioma" Type="Self.Idioma" Multiplicity="1" />
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Idioma">
+              <PropertyRef Name="IdIdioma" />
+            </Principal>
+            <Dependent Role="Conteudo">
+              <PropertyRef Name="IdIdioma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conteudo_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="0..1" />
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="Conteudo">
+              <PropertyRef Name="IdArquivoImagemChamada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conteudo_Template">
+          <End Role="Template" Type="Self.Template" Multiplicity="1" />
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="IdTemplate" />
+            </Principal>
+            <Dependent Role="Conteudo">
+              <PropertyRef Name="IdTemplate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documento_Arquivo">
+          <End Role="Arquivo" Type="Self.Arquivo" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Arquivo">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="IdArquivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GaleriaConteudo_Conteudo">
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="1" />
+          <End Role="GaleriaConteudo" Type="Self.GaleriaConteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conteudo">
+              <PropertyRef Name="IdConteudo" />
+            </Principal>
+            <Dependent Role="GaleriaConteudo">
+              <PropertyRef Name="IdConteudo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GaleriaConteudo_Galeria">
+          <End Role="Galeria" Type="Self.Galeria" Multiplicity="1" />
+          <End Role="GaleriaConteudo" Type="Self.GaleriaConteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Galeria">
+              <PropertyRef Name="IdGaleria" />
+            </Principal>
+            <Dependent Role="GaleriaConteudo">
+              <PropertyRef Name="IdGaleria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Imagem_Midia">
+          <End Role="Midia" Type="Self.Midia" Multiplicity="1" />
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Midia">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="Imagem">
+              <PropertyRef Name="IdArquivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Midia_Arquivo">
+          <End Role="Arquivo" Type="Self.Arquivo" Multiplicity="1" />
+          <End Role="Midia" Type="Self.Midia" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Arquivo">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="Midia">
+              <PropertyRef Name="IdArquivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MidiaGaleria_Galeria">
+          <End Role="Galeria" Type="Self.Galeria" Multiplicity="1" />
+          <End Role="MidiaGaleria" Type="Self.MidiaGaleria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Galeria">
+              <PropertyRef Name="IdGaleria" />
+            </Principal>
+            <Dependent Role="MidiaGaleria">
+              <PropertyRef Name="IdGaleria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MidiaGaleria_Midia">
+          <End Role="Midia" Type="Self.Midia" Multiplicity="1" />
+          <End Role="MidiaGaleria" Type="Self.MidiaGaleria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Midia">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="MidiaGaleria">
+              <PropertyRef Name="IdArquivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Template_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="0..1" />
+          <End Role="Template" Type="Self.Template" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="Template">
+              <PropertyRef Name="IdArquivoImagemMiniatura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Video_Midia">
+          <End Role="Midia" Type="Self.Midia" Multiplicity="1" />
+          <End Role="Video" Type="Self.Video" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Midia">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="Video">
+              <PropertyRef Name="IdArquivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjetoPadraoDadosEntidadesStoreContainer">
+          <EntitySet Name="Arquivo" EntityType="Self.Arquivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Audio" EntityType="Self.Audio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conteudo" EntityType="Self.Conteudo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documento" EntityType="Self.Documento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Galeria" EntityType="Self.Galeria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GaleriaConteudo" EntityType="Self.GaleriaConteudo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GrupoIdioma" EntityType="Self.GrupoIdioma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Idioma" EntityType="Self.Idioma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Imagem" EntityType="Self.Imagem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Midia" EntityType="Self.Midia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MidiaGaleria" EntityType="Self.MidiaGaleria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Video" EntityType="Self.Video" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Audio_Midia" Association="Self.FK_Audio_Midia">
+            <End Role="Midia" EntitySet="Midia" />
+            <End Role="Audio" EntitySet="Audio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categoria_Categoria" Association="Self.FK_Categoria_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Categoria1" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categoria_GrupoIdioma" Association="Self.FK_Categoria_GrupoIdioma">
+            <End Role="GrupoIdioma" EntitySet="GrupoIdioma" />
+            <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categoria_Idioma" Association="Self.FK_Categoria_Idioma">
+            <End Role="Idioma" EntitySet="Idioma" />
+            <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categoria_Template" Association="Self.FK_Categoria_Template">
+            <End Role="Template" EntitySet="Template" />
+            <End Role="Categoria" EntitySet="Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conteudo_GrupoIdioma" Association="Self.FK_Conteudo_GrupoIdioma">
+            <End Role="GrupoIdioma" EntitySet="GrupoIdioma" />
+            <End Role="Conteudo" EntitySet="Conteudo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conteudo_Idioma" Association="Self.FK_Conteudo_Idioma">
+            <End Role="Idioma" EntitySet="Idioma" />
+            <End Role="Conteudo" EntitySet="Conteudo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conteudo_Imagem" Association="Self.FK_Conteudo_Imagem">
+            <End Role="Imagem" EntitySet="Imagem" />
+            <End Role="Conteudo" EntitySet="Conteudo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conteudo_Template" Association="Self.FK_Conteudo_Template">
+            <End Role="Template" EntitySet="Template" />
+            <End Role="Conteudo" EntitySet="Conteudo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documento_Arquivo" Association="Self.FK_Documento_Arquivo">
+            <End Role="Arquivo" EntitySet="Arquivo" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GaleriaConteudo_Conteudo" Association="Self.FK_GaleriaConteudo_Conteudo">
+            <End Role="Conteudo" EntitySet="Conteudo" />
+            <End Role="GaleriaConteudo" EntitySet="GaleriaConteudo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GaleriaConteudo_Galeria" Association="Self.FK_GaleriaConteudo_Galeria">
+            <End Role="Galeria" EntitySet="Galeria" />
+            <End Role="GaleriaConteudo" EntitySet="GaleriaConteudo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Imagem_Midia" Association="Self.FK_Imagem_Midia">
+            <End Role="Midia" EntitySet="Midia" />
+            <End Role="Imagem" EntitySet="Imagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Midia_Arquivo" Association="Self.FK_Midia_Arquivo">
+            <End Role="Arquivo" EntitySet="Arquivo" />
+            <End Role="Midia" EntitySet="Midia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MidiaGaleria_Galeria" Association="Self.FK_MidiaGaleria_Galeria">
+            <End Role="Galeria" EntitySet="Galeria" />
+            <End Role="MidiaGaleria" EntitySet="MidiaGaleria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MidiaGaleria_Midia" Association="Self.FK_MidiaGaleria_Midia">
+            <End Role="Midia" EntitySet="Midia" />
+            <End Role="MidiaGaleria" EntitySet="MidiaGaleria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Template_Imagem" Association="Self.FK_Template_Imagem">
+            <End Role="Imagem" EntitySet="Imagem" />
+            <End Role="Template" EntitySet="Template" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Video_Midia" Association="Self.FK_Video_Midia">
+            <End Role="Midia" EntitySet="Midia" />
+            <End Role="Video" EntitySet="Video" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjetoPadrao.Dados.Entidades" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Arquivo">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+          </Key>
+          <Property Name="IdArquivo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Extensao" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tamanho" Type="Int64" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TipoArquivo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Audio" BaseType="ProjetoPadrao.Dados.Entidades.Midia">
+          <Property Name="Duracao" Type="Time" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Ativa" Type="Boolean" Nullable="false" />
+          <Property Name="IdCategoriaPai" Type="Int32" />
+          <Property Name="IdTemplate" Type="Int32" Nullable="false" />
+          <Property Name="IdGrupoIdioma" Type="Int32" Nullable="false" />
+          <Property Name="IdIdioma" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Subcategorias" Relationship="Self.FK_Categoria_Categoria" FromRole="Categoria" ToRole="Categoria1" />
+          <NavigationProperty Name="CategoriaPai" Relationship="Self.FK_Categoria_Categoria" FromRole="Categoria1" ToRole="Categoria" />
+          <NavigationProperty Name="GrupoIdioma" Relationship="Self.FK_Categoria_GrupoIdioma" FromRole="Categoria" ToRole="GrupoIdioma" />
+          <NavigationProperty Name="Idioma" Relationship="Self.FK_Categoria_Idioma" FromRole="Categoria" ToRole="Idioma" />
+          <NavigationProperty Name="Template" Relationship="Self.FK_Categoria_Template" FromRole="Categoria" ToRole="Template" />
+        </EntityType>
+        <EntityType Name="Conteudo">
+          <Key>
+            <PropertyRef Name="IdConteudo" />
+          </Key>
+          <Property Name="IdConteudo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Chamada" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataCriacao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DataModificacao" Type="DateTime" Precision="3" />
+          <Property Name="DataPublicacao" Type="DateTime" Precision="3" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="IdTemplate" Type="Int32" Nullable="false" />
+          <Property Name="IdArquivoImagemChamada" Type="Int32" />
+          <Property Name="IdGrupoIdioma" Type="Int32" Nullable="false" />
+          <Property Name="IdIdioma" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="GrupoIdioma" Relationship="Self.FK_Conteudo_GrupoIdioma" FromRole="Conteudo" ToRole="GrupoIdioma" />
+          <NavigationProperty Name="Idioma" Relationship="Self.FK_Conteudo_Idioma" FromRole="Conteudo" ToRole="Idioma" />
+          <NavigationProperty Name="ImagemChamada" Relationship="Self.FK_Conteudo_Imagem" FromRole="Conteudo" ToRole="Imagem" />
+          <NavigationProperty Name="Template" Relationship="Self.FK_Conteudo_Template" FromRole="Conteudo" ToRole="Template" />
+          <NavigationProperty Name="GaleriasConteudo" Relationship="Self.FK_GaleriaConteudo_Conteudo" FromRole="Conteudo" ToRole="GaleriaConteudo" />
+        </EntityType>
+        <EntityType Name="Documento" BaseType="ProjetoPadrao.Dados.Entidades.Arquivo">
+          <Property Name="TipoDocumento" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Galeria">
+          <Key>
+            <PropertyRef Name="IdGaleria" />
+          </Key>
+          <Property Name="IdGaleria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GaleriaConteudos" Relationship="Self.FK_GaleriaConteudo_Galeria" FromRole="Galeria" ToRole="GaleriaConteudo" />
+          <NavigationProperty Name="MidiasGaleria" Relationship="Self.FK_MidiaGaleria_Galeria" FromRole="Galeria" ToRole="MidiaGaleria" />
+        </EntityType>
+        <EntityType Name="GaleriaConteudo">
+          <Key>
+            <PropertyRef Name="IdGaleria" />
+            <PropertyRef Name="IdConteudo" />
+          </Key>
+          <Property Name="IdGaleria" Type="Int32" Nullable="false" />
+          <Property Name="IdConteudo" Type="Int32" Nullable="false" />
+          <Property Name="Ordem" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Conteudo" Relationship="Self.FK_GaleriaConteudo_Conteudo" FromRole="GaleriaConteudo" ToRole="Conteudo" />
+          <NavigationProperty Name="Galeria" Relationship="Self.FK_GaleriaConteudo_Galeria" FromRole="GaleriaConteudo" ToRole="Galeria" />
+        </EntityType>
+        <EntityType Name="GrupoIdioma">
+          <Key>
+            <PropertyRef Name="IdGrupoIdioma" />
+          </Key>
+          <Property Name="IdGrupoIdioma" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoGrupoIdioma" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Categorias" Relationship="Self.FK_Categoria_GrupoIdioma" FromRole="GrupoIdioma" ToRole="Categoria" />
+          <NavigationProperty Name="Conteudos" Relationship="Self.FK_Conteudo_GrupoIdioma" FromRole="GrupoIdioma" ToRole="Conteudo" />
+        </EntityType>
+        <EntityType Name="Idioma">
+          <Key>
+            <PropertyRef Name="IdIdioma" />
+          </Key>
+          <Property Name="IdIdioma" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sigla" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Categorias" Relationship="Self.FK_Categoria_Idioma" FromRole="Idioma" ToRole="Categoria" />
+          <NavigationProperty Name="Conteudos" Relationship="Self.FK_Conteudo_Idioma" FromRole="Idioma" ToRole="Conteudo" />
+        </EntityType>
+        <EntityType Name="Imagem" BaseType="ProjetoPadrao.Dados.Entidades.Midia">
+          <Property Name="Largura" Type="Int32" Nullable="false" />
+          <Property Name="Altura" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Conteudos" Relationship="Self.FK_Conteudo_Imagem" FromRole="Imagem" ToRole="Conteudo" />
+          <NavigationProperty Name="Templates" Relationship="Self.FK_Template_Imagem" FromRole="Imagem" ToRole="Template" />
+        </EntityType>
+        <EntityType Name="Midia" BaseType="ProjetoPadrao.Dados.Entidades.Arquivo">
+          <Property Name="TipoMidia" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MidiaGalerias" Relationship="Self.FK_MidiaGaleria_Midia" FromRole="Midia" ToRole="MidiaGaleria" />
+        </EntityType>
+        <EntityType Name="MidiaGaleria">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+            <PropertyRef Name="IdGaleria" />
+          </Key>
+          <Property Name="IdArquivo" Type="Int32" Nullable="false" />
+          <Property Name="IdGaleria" Type="Int32" Nullable="false" />
+          <Property Name="Ordem" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Galeria" Relationship="Self.FK_MidiaGaleria_Galeria" FromRole="MidiaGaleria" ToRole="Galeria" />
+          <NavigationProperty Name="Midia" Relationship="Self.FK_MidiaGaleria_Midia" FromRole="MidiaGaleria" ToRole="Midia" />
+        </EntityType>
+        <EntityType Name="Template">
+          <Key>
+            <PropertyRef Name="IdTemplate" />
+          </Key>
+          <Property Name="IdTemplate" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Alias" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ParseHTML" Type="Boolean" Nullable="false" />
+          <Property Name="IdArquivoImagemMiniatura" Type="Int32" />
+          <NavigationProperty Name="Categorias" Relationship="Self.FK_Categoria_Template" FromRole="Template" ToRole="Categoria" />
+          <NavigationProperty Name="Conteudos" Relationship="Self.FK_Conteudo_Template" FromRole="Template" ToRole="Conteudo" />
+          <NavigationProperty Name="ImagemMiniatura" Relationship="Self.FK_Template_Imagem" FromRole="Template" ToRole="Imagem" />
+        </EntityType>
+        <EntityType Name="Video" BaseType="ProjetoPadrao.Dados.Entidades.Midia">
+          <Property Name="Largura" Type="Int32" Nullable="false" />
+          <Property Name="Altura" Type="Int32" Nullable="false" />
+          <Property Name="Duracao" Type="Time" Nullable="false" Precision="7" />
+        </EntityType>
+        <Association Name="FK_Categoria_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Categoria1" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Categoria1">
+              <PropertyRef Name="IdCategoriaPai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categoria_GrupoIdioma">
+          <End Role="GrupoIdioma" Type="Self.GrupoIdioma" Multiplicity="1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GrupoIdioma">
+              <PropertyRef Name="IdGrupoIdioma" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="IdGrupoIdioma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categoria_Idioma">
+          <End Role="Idioma" Type="Self.Idioma" Multiplicity="1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Idioma">
+              <PropertyRef Name="IdIdioma" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="IdIdioma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categoria_Template">
+          <End Role="Template" Type="Self.Template" Multiplicity="1" />
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="IdTemplate" />
+            </Principal>
+            <Dependent Role="Categoria">
+              <PropertyRef Name="IdTemplate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conteudo_GrupoIdioma">
+          <End Role="GrupoIdioma" Type="Self.GrupoIdioma" Multiplicity="1" />
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GrupoIdioma">
+              <PropertyRef Name="IdGrupoIdioma" />
+            </Principal>
+            <Dependent Role="Conteudo">
+              <PropertyRef Name="IdGrupoIdioma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conteudo_Idioma">
+          <End Role="Idioma" Type="Self.Idioma" Multiplicity="1" />
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Idioma">
+              <PropertyRef Name="IdIdioma" />
+            </Principal>
+            <Dependent Role="Conteudo">
+              <PropertyRef Name="IdIdioma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conteudo_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="0..1" />
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="Conteudo">
+              <PropertyRef Name="IdArquivoImagemChamada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conteudo_Template">
+          <End Role="Template" Type="Self.Template" Multiplicity="1" />
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="IdTemplate" />
+            </Principal>
+            <Dependent Role="Conteudo">
+              <PropertyRef Name="IdTemplate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GaleriaConteudo_Conteudo">
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="1" />
+          <End Role="GaleriaConteudo" Type="Self.GaleriaConteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conteudo">
+              <PropertyRef Name="IdConteudo" />
+            </Principal>
+            <Dependent Role="GaleriaConteudo">
+              <PropertyRef Name="IdConteudo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GaleriaConteudo_Galeria">
+          <End Role="Galeria" Type="Self.Galeria" Multiplicity="1" />
+          <End Role="GaleriaConteudo" Type="Self.GaleriaConteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Galeria">
+              <PropertyRef Name="IdGaleria" />
+            </Principal>
+            <Dependent Role="GaleriaConteudo">
+              <PropertyRef Name="IdGaleria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MidiaGaleria_Galeria">
+          <End Role="Galeria" Type="Self.Galeria" Multiplicity="1" />
+          <End Role="MidiaGaleria" Type="Self.MidiaGaleria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Galeria">
+              <PropertyRef Name="IdGaleria" />
+            </Principal>
+            <Dependent Role="MidiaGaleria">
+              <PropertyRef Name="IdGaleria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Template_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="0..1" />
+          <End Role="Template" Type="Self.Template" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="Template">
+              <PropertyRef Name="IdArquivoImagemMiniatura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MidiaGaleria_Midia">
+          <End Role="Midia" Type="Self.Midia" Multiplicity="1" />
+          <End Role="MidiaGaleria" Type="Self.MidiaGaleria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Midia">
+              <PropertyRef Name="IdArquivo" />
+            </Principal>
+            <Dependent Role="MidiaGaleria">
+              <PropertyRef Name="IdArquivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjetoPadrao" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Arquivos" EntityType="Self.Arquivo" />
+          <EntitySet Name="Categorias" EntityType="Self.Categoria" />
+          <EntitySet Name="Conteudos" EntityType="Self.Conteudo" />
+          <EntitySet Name="Galerias" EntityType="Self.Galeria" />
+          <EntitySet Name="GaleriasConteudos" EntityType="Self.GaleriaConteudo" />
+          <EntitySet Name="GruposIdiomas" EntityType="Self.GrupoIdioma" />
+          <EntitySet Name="Idiomas" EntityType="Self.Idioma" />
+          <EntitySet Name="MidiasGalerias" EntityType="Self.MidiaGaleria" />
+          <EntitySet Name="Templates" EntityType="Self.Template" />
+          <AssociationSet Name="FK_Categoria_Categoria" Association="Self.FK_Categoria_Categoria">
+            <End Role="Categoria" EntitySet="Categorias" />
+            <End Role="Categoria1" EntitySet="Categorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categoria_GrupoIdioma" Association="Self.FK_Categoria_GrupoIdioma">
+            <End Role="GrupoIdioma" EntitySet="GruposIdiomas" />
+            <End Role="Categoria" EntitySet="Categorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categoria_Idioma" Association="Self.FK_Categoria_Idioma">
+            <End Role="Idioma" EntitySet="Idiomas" />
+            <End Role="Categoria" EntitySet="Categorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categoria_Template" Association="Self.FK_Categoria_Template">
+            <End Role="Template" EntitySet="Templates" />
+            <End Role="Categoria" EntitySet="Categorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conteudo_GrupoIdioma" Association="Self.FK_Conteudo_GrupoIdioma">
+            <End Role="GrupoIdioma" EntitySet="GruposIdiomas" />
+            <End Role="Conteudo" EntitySet="Conteudos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conteudo_Idioma" Association="Self.FK_Conteudo_Idioma">
+            <End Role="Idioma" EntitySet="Idiomas" />
+            <End Role="Conteudo" EntitySet="Conteudos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conteudo_Imagem" Association="Self.FK_Conteudo_Imagem">
+            <End Role="Imagem" EntitySet="Arquivos" />
+            <End Role="Conteudo" EntitySet="Conteudos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conteudo_Template" Association="Self.FK_Conteudo_Template">
+            <End Role="Template" EntitySet="Templates" />
+            <End Role="Conteudo" EntitySet="Conteudos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GaleriaConteudo_Conteudo" Association="Self.FK_GaleriaConteudo_Conteudo">
+            <End Role="Conteudo" EntitySet="Conteudos" />
+            <End Role="GaleriaConteudo" EntitySet="GaleriasConteudos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GaleriaConteudo_Galeria" Association="Self.FK_GaleriaConteudo_Galeria">
+            <End Role="Galeria" EntitySet="Galerias" />
+            <End Role="GaleriaConteudo" EntitySet="GaleriasConteudos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MidiaGaleria_Galeria" Association="Self.FK_MidiaGaleria_Galeria">
+            <End Role="Galeria" EntitySet="Galerias" />
+            <End Role="MidiaGaleria" EntitySet="MidiasGalerias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Template_Imagem" Association="Self.FK_Template_Imagem">
+            <End Role="Imagem" EntitySet="Arquivos" />
+            <End Role="Template" EntitySet="Templates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MidiaGaleria_Midia" Association="Self.FK_MidiaGaleria_Midia">
+            <End Role="Midia" EntitySet="Arquivos" />
+            <End Role="MidiaGaleria" EntitySet="MidiasGalerias" />
+          </AssociationSet>
+          </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjetoPadraoDadosEntidadesStoreContainer" CdmEntityContainer="ProjetoPadrao">
+          <EntitySetMapping Name="Arquivos">
+            <EntityTypeMapping TypeName="IsTypeOf(ProjetoPadrao.Dados.Entidades.Arquivo)">
+              <MappingFragment StoreEntitySet="Arquivo">
+                <ScalarProperty Name="IdArquivo" ColumnName="IdArquivo" />
+                <ScalarProperty Name="TipoArquivo" ColumnName="TipoArquivo" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
+                <ScalarProperty Name="Extensao" ColumnName="Extensao" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(ProjetoPadrao.Dados.Entidades.Documento)">
+              <MappingFragment StoreEntitySet="Documento">
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="IdArquivo" ColumnName="IdArquivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(ProjetoPadrao.Dados.Entidades.Midia)">
+              <MappingFragment StoreEntitySet="Midia">
+                <ScalarProperty Name="TipoMidia" ColumnName="TipoMidia" />
+                <ScalarProperty Name="IdArquivo" ColumnName="IdArquivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(ProjetoPadrao.Dados.Entidades.Audio)">
+              <MappingFragment StoreEntitySet="Audio">
+                <ScalarProperty Name="Duracao" ColumnName="Duracao" />
+                <ScalarProperty Name="IdArquivo" ColumnName="IdArquivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(ProjetoPadrao.Dados.Entidades.Video)" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+              <MappingFragment StoreEntitySet="Video">
+                <ScalarProperty Name="IdArquivo" ColumnName="IdArquivo" />
+                <ScalarProperty Name="Duracao" ColumnName="Duracao" />
+                <ScalarProperty Name="Altura" ColumnName="Altura" />
+                <ScalarProperty Name="Largura" ColumnName="Largura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(ProjetoPadrao.Dados.Entidades.Imagem)">
+              <MappingFragment StoreEntitySet="Imagem">
+                <ScalarProperty Name="Altura" ColumnName="Altura" />
+                <ScalarProperty Name="Largura" ColumnName="Largura" />
+                <ScalarProperty Name="IdArquivo" ColumnName="IdArquivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="ProjetoPadrao.Dados.Entidades.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="HTML" ColumnName="HTML" />
+                <ScalarProperty Name="Ativa" ColumnName="Ativa" />
+                <ScalarProperty Name="IdCategoriaPai" ColumnName="IdCategoriaPai" />
+                <ScalarProperty Name="IdTemplate" ColumnName="IdTemplate" />
+                <ScalarProperty Name="IdGrupoIdioma" ColumnName="IdGrupoIdioma" />
+                <ScalarProperty Name="IdIdioma" ColumnName="IdIdioma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conteudos">
+            <EntityTypeMapping TypeName="ProjetoPadrao.Dados.Entidades.Conteudo">
+              <MappingFragment StoreEntitySet="Conteudo">
+                <ScalarProperty Name="IdConteudo" ColumnName="IdConteudo" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Chamada" ColumnName="Chamada" />
+                <ScalarProperty Name="HTML" ColumnName="HTML" />
+                <ScalarProperty Name="DataCriacao" ColumnName="DataCriacao" />
+                <ScalarProperty Name="DataModificacao" ColumnName="DataModificacao" />
+                <ScalarProperty Name="DataPublicacao" ColumnName="DataPublicacao" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="IdTemplate" ColumnName="IdTemplate" />
+                <ScalarProperty Name="IdArquivoImagemChamada" ColumnName="IdArquivoImagemChamada" />
+                <ScalarProperty Name="IdGrupoIdioma" ColumnName="IdGrupoIdioma" />
+                <ScalarProperty Name="IdIdioma" ColumnName="IdIdioma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Galerias">
+            <EntityTypeMapping TypeName="ProjetoPadrao.Dados.Entidades.Galeria">
+              <MappingFragment StoreEntitySet="Galeria">
+                <ScalarProperty Name="IdGaleria" ColumnName="IdGaleria" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GaleriasConteudos">
+            <EntityTypeMapping TypeName="ProjetoPadrao.Dados.Entidades.GaleriaConteudo">
+              <MappingFragment StoreEntitySet="GaleriaConteudo">
+                <ScalarProperty Name="IdGaleria" ColumnName="IdGaleria" />
+                <ScalarProperty Name="IdConteudo" ColumnName="IdConteudo" />
+                <ScalarProperty Name="Ordem" ColumnName="Ordem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GruposIdiomas">
+            <EntityTypeMapping TypeName="ProjetoPadrao.Dados.Entidades.GrupoIdioma">
+              <MappingFragment StoreEntitySet="GrupoIdioma">
+                <ScalarProperty Name="IdGrupoIdioma" ColumnName="IdGrupoIdioma" />
+                <ScalarProperty Name="TipoGrupoIdioma" ColumnName="TipoGrupoIdioma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Idiomas">
+            <EntityTypeMapping TypeName="ProjetoPadrao.Dados.Entidades.Idioma">
+              <MappingFragment StoreEntitySet="Idioma">
+                <ScalarProperty Name="IdIdioma" ColumnName="IdIdioma" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MidiasGalerias">
+            <EntityTypeMapping TypeName="ProjetoPadrao.Dados.Entidades.MidiaGaleria">
+              <MappingFragment StoreEntitySet="MidiaGaleria">
+                <ScalarProperty Name="IdArquivo" ColumnName="IdArquivo" />
+                <ScalarProperty Name="IdGaleria" ColumnName="IdGaleria" />
+                <ScalarProperty Name="Ordem" ColumnName="Ordem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Templates">
+            <EntityTypeMapping TypeName="ProjetoPadrao.Dados.Entidades.Template">
+              <MappingFragment StoreEntitySet="Template">
+                <ScalarProperty Name="IdTemplate" ColumnName="IdTemplate" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="HTML" ColumnName="HTML" />
+                <ScalarProperty Name="ParseHTML" ColumnName="ParseHTML" />
+                <ScalarProperty Name="IdArquivoImagemMiniatura" ColumnName="IdArquivoImagemMiniatura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

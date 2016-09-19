@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+   <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+
+	 <script type="text/javascript">
+		$(document).ready( function () {
+			var href = sessionStorage.getItem('href');
+			$('.cke_dialog_ui_input_text').children[0].value = "My value";
+			$('.cke_dialog_ui_input_text').change(function() {
+				$('.cke_dialog_ui_input_text').children[0].value = "My value";
+			});
+		});
+	</script>
+		
+</head>
+<body>
+
+    <textarea id="editor1" name="editor1"> </textarea>
+
+   <script type="text/javascript">
+
+   CKEDITOR.replace( 'editor1', {
+   		extraPlugins: 'imageuploader'
+   });
+	</script>
+</body>
+
+</html>

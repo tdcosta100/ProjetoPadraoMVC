@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CBC29DB8-E5E2-4AA4-AED3-2DA0FFE8DC45}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProjetoPadrao.Dados</RootNamespace>
+    <AssemblyName>ProjetoPadrao.Dados</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DAO\ArquivoDAO.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\CategoriaDAO.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\ConteudoDAO.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\Extensoes\TemplateDAO.cs" />
+    <Compile Include="DAO\GaleriaConteudoDAO.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\GaleriaDAO.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\GrupoIdiomaDAO.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\IdiomaDAO.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\MidiaGaleriaDAO.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\ProjetoPadrao.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\TemplateDAO.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContextFactory.cs" />
+    <Compile Include="Entidades\Arquivo.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Audio.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Categoria.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Conteudo.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Documento.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Galeria.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\GaleriaConteudo.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\GrupoIdioma.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Idioma.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Imagem.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Midia.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\MidiaGaleria.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\ProjetoPadrao.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjetoPadrao.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\ProjetoPadrao.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\ProjetoPadrao.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjetoPadrao.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Template.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Video.cs">
+      <DependentUpon>ProjetoPadrao.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Entidades\ProjetoPadrao.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ProjetoPadrao.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Entidades\ProjetoPadrao.edmx.diagram">
+      <DependentUpon>ProjetoPadrao.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DAO\ProjetoPadrao.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ProjetoPadrao.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entidades\ProjetoPadrao.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ProjetoPadrao.Context.cs</LastGenOutput>
+      <DependentUpon>ProjetoPadrao.edmx</DependentUpon>
+    </Content>
+    <Content Include="Entidades\ProjetoPadrao.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProjetoPadrao.edmx</DependentUpon>
+      <LastGenOutput>ProjetoPadrao.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

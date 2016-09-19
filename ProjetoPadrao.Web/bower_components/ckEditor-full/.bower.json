@@ -1,0 +1,12 @@
+{
+  "name": "ckEditor-full",
+  "_release": "08bda5f2a5",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "08bda5f2a54867b5dab291bfe17524fa54f20130"
+  },
+  "_source": "https://hina123@bitbucket.org/hina123/ckeditorfull.git",
+  "_target": "*",
+  "_originalSource": "ckEditor-full"
+}

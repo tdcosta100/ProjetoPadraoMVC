@@ -1,0 +1,14 @@
+{
+	"name": "asp.net",
+	"private": true,
+  "dependencies": {
+    "bootstrap": "*",
+    "jquery": "*",
+    "jquery-validation": "*",
+    "jquery-validation-unobtrusive": "*",
+    "modernizr": "*",
+    "respond": "*",
+    "ckEditor-full": "*",
+    "ace-builds": "*"
+  }
+}
