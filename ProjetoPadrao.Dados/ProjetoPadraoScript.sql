@@ -97,7 +97,7 @@ CREATE TABLE [dbo].[Arquivo] (
     [Nome]        NVARCHAR (255) NOT NULL,
     [Extensao]    NVARCHAR (10)  NOT NULL,
     [Tamanho]     BIGINT         NOT NULL,
-    [Descricao]   TEXT           NULL,
+    [Descricao]   NTEXT          NULL,
     [TipoArquivo] NVARCHAR (10)  NOT NULL,
     CONSTRAINT [PK_Arquivo] PRIMARY KEY CLUSTERED ([IdArquivo] ASC)
 );
@@ -154,7 +154,7 @@ CREATE TABLE [dbo].[Categoria] (
     [IdCategoria]    INT            IDENTITY (1, 1) NOT NULL,
     [Nome]           NVARCHAR (500) NOT NULL,
     [URL]            NVARCHAR (500) NOT NULL,
-    [HTML]           TEXT           NULL,
+    [HTML]           NTEXT          NULL,
 	[Ativa]          BIT            NOT NULL,
     [IdCategoriaPai] INT            NULL,
     [IdTemplate]     INT            NOT NULL,
@@ -213,7 +213,7 @@ CREATE TABLE [dbo].[Conteudo] (
     [Titulo]                 NVARCHAR (500) NOT NULL,
     [URL]                    NVARCHAR (500) NOT NULL,
     [Chamada]                NVARCHAR (500) NULL,
-    [HTML]                   TEXT           NOT NULL,
+    [HTML]                   NTEXT          NOT NULL,
 	[DataCriacao]            DATETIME       NOT NULL DEFAULT GETDATE(),
 	[DataModificacao]        DATETIME       NULL,
 	[DataPublicacao]         DATETIME       NULL,
@@ -300,7 +300,7 @@ GO
 CREATE TABLE [dbo].[Galeria] (
     [IdGaleria] INT            IDENTITY (1, 1) NOT NULL,
     [Nome]      NVARCHAR (500) NULL,
-    [Descricao] TEXT           NULL,
+    [Descricao] NTEXT          NULL,
     CONSTRAINT [PK_Galeria] PRIMARY KEY CLUSTERED ([IdGaleria] ASC)
 );
 
@@ -495,7 +495,7 @@ CREATE TABLE [dbo].[Template] (
     [IdTemplate]               INT            IDENTITY (1, 1) NOT NULL,
     [Nome]                     NVARCHAR (500) NOT NULL,
     [Alias]                    NVARCHAR (500) NOT NULL,
-    [HTML]                     TEXT           NOT NULL,
+    [HTML]                     NTEXT          NOT NULL,
     [ParseHTML]                BIT            NOT NULL,
     [IdArquivoImagemMiniatura] INT            NULL,
     CONSTRAINT [PK_Template] PRIMARY KEY CLUSTERED ([IdTemplate] ASC)

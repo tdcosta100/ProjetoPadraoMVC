@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjetoPadrao.Dados.Entidades.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjetoPadrao.Dados.Entidades.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Arquivo">
           <Key>
             <PropertyRef Name="IdArquivo" />
@@ -13,7 +13,7 @@
           <Property Name="Nome" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Extensao" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Tamanho" Type="bigint" Nullable="false" />
-          <Property Name="Descricao" Type="text" />
+          <Property Name="Descricao" Type="ntext" />
           <Property Name="TipoArquivo" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Audio">
@@ -30,7 +30,7 @@
           <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nome" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="URL" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="HTML" Type="text" />
+          <Property Name="HTML" Type="ntext" />
           <Property Name="Ativa" Type="bit" Nullable="false" />
           <Property Name="IdCategoriaPai" Type="int" />
           <Property Name="IdTemplate" Type="int" Nullable="false" />
@@ -45,7 +45,7 @@
           <Property Name="Titulo" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="URL" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Chamada" Type="nvarchar" MaxLength="500" />
-          <Property Name="HTML" Type="text" Nullable="false" />
+          <Property Name="HTML" Type="ntext" Nullable="false" />
           <Property Name="DataCriacao" Type="datetime" Nullable="false" />
           <Property Name="DataModificacao" Type="datetime" />
           <Property Name="DataPublicacao" Type="datetime" />
@@ -68,7 +68,7 @@
           </Key>
           <Property Name="IdGaleria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nome" Type="nvarchar" MaxLength="500" />
-          <Property Name="Descricao" Type="text" />
+          <Property Name="Descricao" Type="ntext" />
         </EntityType>
         <EntityType Name="GaleriaConteudo">
           <Key>
@@ -125,7 +125,7 @@
           <Property Name="IdTemplate" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nome" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Alias" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="HTML" Type="text" Nullable="false" />
+          <Property Name="HTML" Type="ntext" Nullable="false" />
           <Property Name="ParseHTML" Type="bit" Nullable="false" />
           <Property Name="IdArquivoImagemMiniatura" Type="int" />
         </EntityType>
@@ -455,7 +455,7 @@
           <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Extensao" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Tamanho" Type="Int64" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TipoArquivo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Audio" BaseType="ProjetoPadrao.Dados.Entidades.Midia">
@@ -468,7 +468,7 @@
           <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nome" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Ativa" Type="Boolean" Nullable="false" />
           <Property Name="IdCategoriaPai" Type="Int32" />
           <Property Name="IdTemplate" Type="Int32" Nullable="false" />
@@ -488,7 +488,7 @@
           <Property Name="Titulo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Chamada" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DataCriacao" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DataModificacao" Type="DateTime" Precision="3" />
           <Property Name="DataPublicacao" Type="DateTime" Precision="3" />
@@ -512,7 +512,7 @@
           </Key>
           <Property Name="IdGaleria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nome" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="GaleriaConteudos" Relationship="Self.FK_GaleriaConteudo_Galeria" FromRole="Galeria" ToRole="GaleriaConteudo" />
           <NavigationProperty Name="MidiasGaleria" Relationship="Self.FK_MidiaGaleria_Galeria" FromRole="Galeria" ToRole="MidiaGaleria" />
         </EntityType>
@@ -574,7 +574,7 @@
           <Property Name="IdTemplate" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nome" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Alias" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ParseHTML" Type="Boolean" Nullable="false" />
           <Property Name="IdArquivoImagemMiniatura" Type="Int32" />
           <NavigationProperty Name="Categorias" Relationship="Self.FK_Categoria_Template" FromRole="Template" ToRole="Categoria" />
