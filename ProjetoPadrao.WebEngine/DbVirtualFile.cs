@@ -24,7 +24,7 @@ namespace ProjetoPadrao.WebEngine
         {
             Stream stream = new MemoryStream();
 
-            StreamWriter writer = new StreamWriter(stream);
+            StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
             writer.Write(_Template.HTML);
             writer.Flush();
 
