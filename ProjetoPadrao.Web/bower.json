@@ -1,14 +1,20 @@
 {
-	"name": "asp.net",
-	"private": true,
+  "name": "asp.net",
+  "private": true,
   "dependencies": {
-    "bootstrap": "*",
-    "jquery": "*",
-    "jquery-validation": "*",
-    "jquery-validation-unobtrusive": "*",
-    "modernizr": "*",
-    "respond": "*",
-    "ckEditor-full": "*",
-    "ace-builds": "*"
+    "bootstrap": "3.3.7",
+    "jquery": "3.1.0",
+    "jquery-validation": "1.15.1",
+    "jquery-validation-unobtrusive": "3.2.6",
+    "modernizr": "3.3.1",
+    "respond": "1.4.2",
+    "ckeditor": "ckeditor/ckeditor-releases#full/4.5.11",
+    "ace-builds": "1.2.5",
+    "jstree": "3.3.2",
+    "jstree-bootstrap-theme": "1.0.1"
+  },
+  "resolutions": {
+    "bootstrap": "3.3.7",
+    "jstree": "3.3.2"
   }
 }

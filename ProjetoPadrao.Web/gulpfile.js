@@ -64,7 +64,7 @@ var packages = {
             dest: "Scripts/"
         }
     ],
-    "ckEditor-full": [
+    "ckeditor": [
         {
             src: ["**/*"],
             base: "",
@@ -76,6 +76,18 @@ var packages = {
             src: ["src-min-noconflict/**/*"],
             base: "src-min-noconflict/",
             dest: "Scripts/ace/"
+        }
+    ],
+    "jstree": [
+        {
+            src: ["dist/themes/**"],
+            base: "dist/themes/",
+            dest: "Content/CSS/jstree-themes/"
+        },
+        {
+            src: ["dist/*.js"],
+            base: "dist/",
+            dest: "Scripts/"
         }
     ]
 };
