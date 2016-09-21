@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ProjetoPadrao.Dados.Entidades.Categoria>
+
+<ul>
+@foreach (var categoria in Model)
+{
+    
+
+    <li data-jstree="@Json.Encode(new { type = "categoria", icon = "glyphicon glyphicon-folder-close" })">
+        @categoria.Nome
+        @if (categoria.Subcategorias.Any())
+        {
+            @Html.Partial("ArvoreCategorias", categoria.Subcategorias)
+        }
+    </li>
+}
+</ul>

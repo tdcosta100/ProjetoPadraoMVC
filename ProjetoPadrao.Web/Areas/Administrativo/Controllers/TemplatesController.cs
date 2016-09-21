@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
 {
-    public class TemplateController : Controller
+    public class TemplatesController : Controller
     {
         public ActionResult Index()
         {

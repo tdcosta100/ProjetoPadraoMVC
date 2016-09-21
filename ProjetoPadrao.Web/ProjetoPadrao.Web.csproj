@@ -170,8 +170,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administrativo\AdministrativoAreaRegistration.cs" />
+    <Compile Include="Areas\Administrativo\Controllers\CategoriasController.cs" />
     <Compile Include="Areas\Administrativo\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Administrativo\Controllers\TemplateController.cs" />
+    <Compile Include="Areas\Administrativo\Controllers\TemplatesController.cs" />
+    <Compile Include="Areas\Administrativo\Models\Categoria.cs" />
     <Compile Include="Areas\Administrativo\Models\Template.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -211,9 +213,9 @@
     <Content Include="Areas\Administrativo\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Administrativo\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Administrativo\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Administrativo\Views\Template\Index.cshtml" />
-    <Content Include="Areas\Administrativo\Views\Template\Novo.cshtml" />
-    <Content Include="Areas\Administrativo\Views\Template\Editar.cshtml" />
+    <Content Include="Areas\Administrativo\Views\Templates\Index.cshtml" />
+    <Content Include="Areas\Administrativo\Views\Templates\Novo.cshtml" />
+    <Content Include="Areas\Administrativo\Views\Templates\Editar.cshtml" />
     <Content Include="bower.json" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\ace\ace.js" />
@@ -1022,11 +1024,14 @@
     <Content Include="packages.config" />
     <Content Include=".bowerrc" />
     <Content Include="package.json" />
+    <Content Include="Areas\Administrativo\Views\Categorias\Index.cshtml" />
     <Content Include="Content\CSS\bootstrap-theme.css.map" />
     <Content Include="Content\CSS\bootstrap-theme.min.css.map" />
     <Content Include="Content\CSS\bootstrap.css.map" />
     <Content Include="Content\CSS\bootstrap.min.css.map" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Administrativo\Views\Categorias\ArvoreCategorias.cshtml" />
+    <Content Include="Areas\Administrativo\Views\Categorias\Novo.cshtml" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>

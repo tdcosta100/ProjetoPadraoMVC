@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ProjetoPadrao.Dados.Entidades.Categoria>
+
+@{
+    ViewBag.Title = "Categorias";
+
+    var lookupCategorias = Model.ToLookup(c => c.IdCategoriaPai);
+
+    foreach (var categoria in Model.ToList())
+    {
+        categoria.Subcategorias = lookupCategorias[categoria.IdCategoria].OrderBy(c => c.Ordem).ToList();
+    }
+
+    var arvoreCategorias = lookupCategorias[null].OrderBy(c => c.Ordem);
+}
+
+<h2>Categorias</h2>
+
+<p>
+    @Html.ActionLink("Adicionar categoria", "Novo")
+</p>
+
+<div class="arvore-categorias">
+    @Html.Partial("ArvoreCategorias", arvoreCategorias)
+</div>
+
+@section css {
+    @Styles.Render("~/Content/CSS/jstree-themes/default/style.min.css")
+}
+
+@section scripts {
+    @Scripts.Render("~/Scripts/jstree.min.js")
+    <script type="text/javascript">
+        jQuery(function ($)
+        {
+            $(".arvore-categorias").data("permitirAlteracoesEstrutura", false);
+            $(".arvore-categorias").jstree({
+                core: {
+                    check_callback: function (operation, node, node_parent, node_position, more)
+                    {
+                        console.log([this, arguments]);
+                        return $(".arvore-categorias").data("permitirAlteracoesEstrutura") && true;
+                    }
+                },
+                plugins: [
+                    "contextmenu",
+                    "dnd"
+                ],
+                contextmenu: {
+                    items: {
+                        adicionarSubcategoria: {
+                            label: "Adicionar subcategoria",
+                            action: function ()
+                            {
+                                console.log([this, arguments]);
+                            }
+                        },
+                        editar: {
+                            label: "Editar",
+                            action: function ()
+                            {
+                                console.log([this, arguments]);
+                            }
+                        },
+                        excluir: {
+                            label: "Excluir",
+                            action: function ()
+                            {
+                                console.log([this, arguments]);
+                            }
+                        }
+                    }
+                },
+                dnd: {
+                    copy: false,
+                    drag_selection: false
+                }
+            });
+        });
+    </script>
+}
