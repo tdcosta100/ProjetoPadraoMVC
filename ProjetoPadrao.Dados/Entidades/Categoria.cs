@@ -25,6 +25,7 @@ namespace ProjetoPadrao.Dados.Entidades
         public string URL { get; set; }
         public string HTML { get; set; }
         public bool Ativa { get; set; }
+        public int Ordem { get; set; }
         public Nullable<int> IdCategoriaPai { get; set; }
         public int IdTemplate { get; set; }
         public int IdGrupoIdioma { get; set; }

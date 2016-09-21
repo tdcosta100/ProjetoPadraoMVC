@@ -32,6 +32,7 @@
           <Property Name="URL" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="HTML" Type="ntext" />
           <Property Name="Ativa" Type="bit" Nullable="false" />
+          <Property Name="Ordem" Type="int" Nullable="false" />
           <Property Name="IdCategoriaPai" Type="int" />
           <Property Name="IdTemplate" Type="int" Nullable="false" />
           <Property Name="IdGrupoIdioma" Type="int" Nullable="false" />
@@ -470,6 +471,7 @@
           <Property Name="URL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Ativa" Type="Boolean" Nullable="false" />
+          <Property Name="Ordem" Type="Int32" Nullable="false" />
           <Property Name="IdCategoriaPai" Type="Int32" />
           <Property Name="IdTemplate" Type="Int32" Nullable="false" />
           <Property Name="IdGrupoIdioma" Type="Int32" Nullable="false" />
@@ -864,6 +866,7 @@
                 <ScalarProperty Name="URL" ColumnName="URL" />
                 <ScalarProperty Name="HTML" ColumnName="HTML" />
                 <ScalarProperty Name="Ativa" ColumnName="Ativa" />
+                <ScalarProperty Name="Ordem" ColumnName="Ordem" />
                 <ScalarProperty Name="IdCategoriaPai" ColumnName="IdCategoriaPai" />
                 <ScalarProperty Name="IdTemplate" ColumnName="IdTemplate" />
                 <ScalarProperty Name="IdGrupoIdioma" ColumnName="IdGrupoIdioma" />

@@ -156,6 +156,7 @@ CREATE TABLE [dbo].[Categoria] (
     [URL]            NVARCHAR (500) NOT NULL,
     [HTML]           NTEXT          NULL,
 	[Ativa]          BIT            NOT NULL,
+	[Ordem]          INT            NOT NULL,
     [IdCategoriaPai] INT            NULL,
     [IdTemplate]     INT            NOT NULL,
     [IdGrupoIdioma]  INT            NOT NULL,
