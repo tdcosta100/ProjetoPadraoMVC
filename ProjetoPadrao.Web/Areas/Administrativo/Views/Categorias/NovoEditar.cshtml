@@ -1,13 +1,16 @@
 ﻿@model ProjetoPadrao.Web.Areas.Administrativo.Models.CategoriaNovo
 
+@{ 
+    var arvoreCategorias = ViewBag.ArvoreCategorias as IEnumerable<ProjetoPadrao.Dados.Entidades.Categoria>;
+    var idiomas = ViewBag.Idiomas as IQueryable<ProjetoPadrao.Dados.Entidades.Idioma>;
+    var templates = ViewBag.Templates as IQueryable<ProjetoPadrao.Dados.Entidades.Template>;
+}
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>CategoriaNovo</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -46,7 +49,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdCategoriaPai, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdCategoriaPai, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.IdCategoriaPai, arvoreCategorias.Select(c => new SelectListItem { Value = c.IdCategoria.ToString(), Text = c.Nome }), "Selecione uma categoria", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdCategoriaPai, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -54,7 +57,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdTemplate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdTemplate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.IdTemplate, templates.Select(t => new SelectListItem { Value = t.IdTemplate.ToString(), Text = t.Nome }), "Selecione um template", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdTemplate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -62,40 +65,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdIdioma, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdIdioma, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.IdIdioma, idiomas.Select(i => new SelectListItem { Value = i.IdIdioma.ToString(), Text = i.Nome }), "Selecione um idioma", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdIdioma, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/ckeditor/ckeditor.js")
-
-    <script type="text/javascript">
-        jQuery(function ($)
-        {
-            CKEDITOR.replace("HTML", {
-                on: {
-                    "change": function (event)
-                    {
-                        console.log([this, arguments]);
-
-                        event.editor.updateElement();
-                    }
-                }
-            });
-        });
-    </script>
 }

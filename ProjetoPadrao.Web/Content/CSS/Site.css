@@ -22,3 +22,26 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#modal-carregando {
+    text-align: center;
+}
+
+#modal-carregando:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#modal-carregando .modal-dialog {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#modal-carregando .progress {
+    margin: 0;
+    padding: 0;
+}

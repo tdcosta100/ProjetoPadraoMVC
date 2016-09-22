@@ -15,9 +15,34 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
             return View(CategoriaDAO.Listar());
         }
 
+        public ActionResult ArvoreCategorias()
+        {
+            var lookupCategorias = CategoriaDAO.Listar().ToLookup(c => c.IdCategoriaPai);
+
+            foreach (var categoria in CategoriaDAO.Listar().ToList())
+            {
+                categoria.Subcategorias = lookupCategorias[categoria.IdCategoria].OrderBy(c => c.Ordem).ToList();
+            }
+
+            var arvoreCategorias = lookupCategorias[null].OrderBy(c => c.Ordem);
+
+            return PartialView(arvoreCategorias);
+        }
+
         public ActionResult Novo()
         {
-            return View();
+            var lookupCategorias = CategoriaDAO.Listar().ToLookup(c => c.IdCategoriaPai);
+
+            foreach (var categoria in CategoriaDAO.Listar().ToList())
+            {
+                categoria.Subcategorias = lookupCategorias[categoria.IdCategoria].OrderBy(c => c.Ordem).ToList();
+            }
+
+            ViewBag.ArvoreCategorias = lookupCategorias[null].OrderBy(c => c.Ordem);
+            ViewBag.Idiomas = IdiomaDAO.Listar();
+            ViewBag.Templates = TemplateDAO.Listar();
+
+            return PartialView("NovoEditar");
         }
 
         [HttpPost]
@@ -42,10 +67,10 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
 
                 CategoriaDAO.Inserir(categoria);
 
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.Accepted);
             }
 
-            return View(model);
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
     }
 }

@@ -3,9 +3,7 @@
 <ul>
 @foreach (var categoria in Model)
 {
-    
-
-    <li data-jstree="@Json.Encode(new { type = "categoria", icon = "glyphicon glyphicon-folder-close" })">
+    <li data-jstree="@Json.Encode(new { type = (categoria.CategoriaPai != null) ? "categoria" : "home", id = categoria.IdCategoria })">
         @categoria.Nome
         @if (categoria.Subcategorias.Any())
         {

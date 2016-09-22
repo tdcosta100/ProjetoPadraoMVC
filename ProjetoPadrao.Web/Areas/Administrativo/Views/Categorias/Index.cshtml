@@ -16,23 +16,186 @@
 <h2>Categorias</h2>
 
 <p>
-    @Html.ActionLink("Adicionar categoria", "Novo")
+    <button type="button" class="btn btn-primary" id="btn-adicionar-categoria" data-toggle="modal" data-target="#modal-formulario">Adicionar categoria</button>
+    <button type="button" class="btn btn-warning" id="btn-organizar-categorias" data-toggle="button" aria-pressed="false" autocomplete="off">Organizar categorias</button>
+    <button type="button" class="btn btn-danger" id="btn-organizar-categorias-cancelar" data-toggle="modal" data-target="#modal-confirmacao">Cancelar</button>
+    <button type="button" class="btn btn-success" id="btn-organizar-categorias-salvar" data-toggle="modal" data-target="#modal-confirmacao">Salvar</button>
 </p>
 
-<div class="arvore-categorias">
+<div class="arvore-categorias-template" style="display: none;">
     @Html.Partial("ArvoreCategorias", arvoreCategorias)
 </div>
 
+<div class="modal fade" id="modal-formulario" tabindex="-1" role="dialog" aria-labelledby="modal-formulario">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modal-formulario-label">Adicionar categoria</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success" id="btn-salvar">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-confirmacao" tabindex="-1" role="dialog" aria-labelledby="modal-confirmacao">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modal-formulario-label">Confirmar cancelamento</h4>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente cancelar? As alterações serão perdidas.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Voltar</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="btn-confirmar">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-sucesso" tabindex="-1" role="dialog" aria-labelledby="modal-sucesso">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modal-formulario-label">Sucesso</h4>
+            </div>
+            <div class="modal-body">
+                <p>Dados salvos com sucesso.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="btn-sucesso">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @section css {
     @Styles.Render("~/Content/CSS/jstree-themes/default/style.min.css")
+    <style type="text/css">
+        .glyphicon-file:before {
+            color: #fff;
+            text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000;
+        }
+
+        .jstree-open .glyphicon.glyphicon-folder-close:before {
+            content: "\e118";
+        }
+    </style>
 }
 
 @section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/ckeditor/ckeditor.js")
     @Scripts.Render("~/Scripts/jstree.min.js")
     <script type="text/javascript">
         jQuery(function ($)
         {
-            $(".arvore-categorias").data("permitirAlteracoesEstrutura", false);
+            $("#modal-formulario").on("show.bs.modal", function (event)
+            {
+                if (!$(this).data("loaded"))
+                {
+                    event.preventDefault();
+
+                    $(".modal-body", this).load("@Url.Action("Novo", "Categorias")", function (response, status, xhr)
+                    {
+                        if (status == "error")
+                        {
+
+                        }
+                        else
+                        {
+                            configurarFormulario();
+
+                            $("#modal-formulario").data({
+                                loaded: true,
+                                closeConfirmed: false
+                            }).modal("show");
+                        }
+                    });
+                }
+            });
+
+            $("#modal-formulario").on("hide.bs.modal", function (event)
+            {
+                if (!$(this).data("closeConfirmed"))
+                {
+                    event.preventDefault();
+
+                    $("#modal-confirmacao").modal("show");
+                }
+                else
+                {
+                    $("form").each(function ()
+                    {
+                        var validator = $(this).data("validator");
+
+                        if (validator)
+                        {
+                            $(":input." + validator.settings.errorClass, this).removeClass(validator.settings.errorClass);
+                            $(":input." + validator.settings.pendingClass, this).removeClass(validator.settings.pendingClass);
+                            $(":input." + validator.settings.validClass, this).removeClass(validator.settings.validClass);
+                            $(".field-validation-error " + validator.settings.errorElement, this).remove();
+
+                            $(this).removeData("unobtrusiveValidation");
+                            validator.destroy();
+                        }
+
+                        if (CKEDITOR.instances["HTML"])
+                        {
+                            CKEDITOR.instances["HTML"].destroy();
+                        }
+                    });
+
+                    $(this).data("loaded", false);
+                }
+            });
+
+            $("#btn-confirmar, #btn-sucesso").on("click", function ()
+            {
+                $("#modal-formulario").data("closeConfirmed", true);
+                $("#modal-formulario").modal("hide");
+            });
+
+            $("#btn-organizar-categorias").on("click", function ()
+            {
+                setTimeout(function ()
+                {
+                    if($("#btn-organizar-categorias").hasClass("active"))
+                    {
+                        $("#btn-adicionar-categoria").prop("disabled", true);
+                        $("#btn-organizar-categorias").hide();
+                        $("#btn-organizar-categorias-salvar, #btn-organizar-categorias-cancelar").show();
+                    }
+                    else
+                    {
+                        $("#btn-adicionar-categoria").prop("disabled", false);
+                        $("#btn-organizar-categorias").show();
+                        $("#btn-organizar-categorias-salvar, #btn-organizar-categorias-cancelar").hide();
+                    }
+                }, 0);
+            });
+
+            $("#btn-organizar-categorias-salvar, #btn-organizar-categorias-cancelar").hide();
+
+            carregarArvoreCategorias();
+        });
+
+        function carregarArvoreCategorias()
+        {
+            $(".arvore-categorias-template").clone().removeClass("arvore-categorias-template").addClass("arvore-categorias").insertBefore(".arvore-categorias-template").show();
+
             $(".arvore-categorias").jstree({
                 core: {
                     check_callback: function (operation, node, node_parent, node_position, more)
@@ -43,7 +206,8 @@
                 },
                 plugins: [
                     "contextmenu",
-                    "dnd"
+                    "dnd",
+                    "types"
                 ],
                 contextmenu: {
                     items: {
@@ -73,8 +237,81 @@
                 dnd: {
                     copy: false,
                     drag_selection: false
+                },
+                types: {
+                    "#": {
+                        max_children: 1,
+                        valid_children: ["home"]
+                    },
+                    home: {
+                        icon: "glyphicon glyphicon-home",
+                        valid_children: ["categoria"]
+                    },
+                    categoria: {
+                        icon: "glyphicon glyphicon-folder-close",
+                        valid_children: ["categoria", "documento"]
+                    },
+                    documento: {
+                        icon: "glyphicon glyphicon-file"
+                    }
                 }
             });
-        });
+        }
+
+        function configurarFormulario()
+        {
+            $.validator.unobtrusive.parse("#modal-formulario");
+
+            CKEDITOR.replace($("#modal-formulario #HTML").get(0), {
+                on: {
+                    "change": function (event)
+                    {
+                        event.editor.updateElement();
+                    }
+                }
+            });
+
+            $("#modal-formulario form").data("validator").settings.submitHandler = function (form)
+            {
+                var dados = {};
+
+                $($(form).serializeArray()).each(function ()
+                {
+                    dados[this.name] = this.value;
+                });
+
+                $("#modal-carregando").modal("show");
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Novo", "Categorias")",
+                    data: dados,
+                    success: function (data, status, xhr)
+                    {
+                        $(".arvore-categorias-template").empty().load("@Url.Action("ArvoreCategorias", "Categorias")", function (response, status, xhr)
+                        {
+                            $(".arvore-categorias").jstree("destroy").remove();
+
+                            carregarArvoreCategorias();
+                        });
+
+                        $("#modal-sucesso").modal("show");
+                    },
+                    error: function (xhr, status, error)
+                    {
+
+                    },
+                    complete: function (xhr, status)
+                    {
+                        $("#modal-carregando").modal("hide");
+                    }
+                });
+            };
+
+            $("#btn-salvar").off().on("click", function ()
+            {
+                $("#modal-formulario form").submit();
+            });
+        }
     </script>
 }

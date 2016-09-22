@@ -982,6 +982,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.src.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\respond.src.js" />
+    <Content Include="Scripts\Site.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1031,7 +1032,7 @@
     <Content Include="Content\CSS\bootstrap.min.css.map" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Areas\Administrativo\Views\Categorias\ArvoreCategorias.cshtml" />
-    <Content Include="Areas\Administrativo\Views\Categorias\Novo.cshtml" />
+    <Content Include="Areas\Administrativo\Views\Categorias\NovoEditar.cshtml" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
