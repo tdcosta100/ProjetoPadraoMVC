@@ -1,12 +1,16 @@
 ﻿@model ProjetoPadrao.Web.Areas.Administrativo.Models.CategoriaNovo
 
 @{ 
-    var arvoreCategorias = ViewBag.ArvoreCategorias as IEnumerable<ProjetoPadrao.Dados.Entidades.Categoria>;
+    var categorias = ViewBag.Categorias as IQueryable<ProjetoPadrao.Dados.Entidades.Categoria>;
     var idiomas = ViewBag.Idiomas as IQueryable<ProjetoPadrao.Dados.Entidades.Idioma>;
     var templates = ViewBag.Templates as IQueryable<ProjetoPadrao.Dados.Entidades.Template>;
+
+    var atributos = new Dictionary<string, object> { { "class", "form-control" } };
+    var atributosSomenteLeitura = new Dictionary<string, object> { { "readonly", null } };
+    var atributosDesabilitado = new Dictionary<string, object> { { "disabled", null } };
 }
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
@@ -49,7 +53,11 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdCategoriaPai, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.IdCategoriaPai, arvoreCategorias.Select(c => new SelectListItem { Value = c.IdCategoria.ToString(), Text = c.Nome }), "Selecione uma categoria", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.IdCategoriaPai, categorias.Select(c => new SelectListItem { Value = c.IdCategoria.ToString(), Text = c.Nome }), "Selecione uma categoria", (Model != null && Model.IdCategoriaPai.HasValue) ? atributos.Concat(atributosDesabilitado).ToDictionary(a => a.Key, a => a.Value) : atributos)
+                @if (Model != null && Model.IdCategoriaPai.HasValue)
+                {
+                    @Html.HiddenFor(model => model.IdCategoriaPai)
+                }
                 @Html.ValidationMessageFor(model => model.IdCategoriaPai, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -65,7 +73,11 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdIdioma, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.IdIdioma, idiomas.Select(i => new SelectListItem { Value = i.IdIdioma.ToString(), Text = i.Nome }), "Selecione um idioma", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.IdIdioma, idiomas.Select(i => new SelectListItem { Value = i.IdIdioma.ToString(), Text = i.Nome }), "Selecione um idioma", (Model != null && Model.IdIdioma.HasValue) ? atributos.Concat(atributosDesabilitado).ToDictionary(a => a.Key, a => a.Value) : atributos)
+                @if (Model != null && Model.IdIdioma.HasValue)
+                {
+                    @Html.HiddenFor(model => model.IdIdioma)
+                }
                 @Html.ValidationMessageFor(model => model.IdIdioma, "", new { @class = "text-danger" })
             </div>
         </div>

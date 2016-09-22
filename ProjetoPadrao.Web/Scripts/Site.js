@@ -25,3 +25,18 @@
         }, 50);
     });
 });
+
+function Modal(options)
+{
+	var defaults = {
+		id: "",
+		title: "",
+		backdrop: true,
+		keyboard: true,
+		show: true,
+		content: "",
+		buttons: []
+	};
+
+	var settings = $.extend({}, defaults, options);
+}

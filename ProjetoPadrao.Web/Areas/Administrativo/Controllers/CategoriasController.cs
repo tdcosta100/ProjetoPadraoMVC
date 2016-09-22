@@ -29,20 +29,16 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
             return PartialView(arvoreCategorias);
         }
 
-        public ActionResult Novo()
+		[HttpGet]
+        public ActionResult Novo(bool? carregarFormulario, Models.CategoriaNovo model)
         {
-            var lookupCategorias = CategoriaDAO.Listar().ToLookup(c => c.IdCategoriaPai);
-
-            foreach (var categoria in CategoriaDAO.Listar().ToList())
-            {
-                categoria.Subcategorias = lookupCategorias[categoria.IdCategoria].OrderBy(c => c.Ordem).ToList();
-            }
-
-            ViewBag.ArvoreCategorias = lookupCategorias[null].OrderBy(c => c.Ordem);
+            ViewBag.Categorias = CategoriaDAO.Listar();
             ViewBag.Idiomas = IdiomaDAO.Listar();
             ViewBag.Templates = TemplateDAO.Listar();
 
-            return PartialView("NovoEditar");
+			ModelState.Clear();
+
+            return PartialView("NovoEditar", model);
         }
 
         [HttpPost]
@@ -57,8 +53,8 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                     HTML = model.HTML,
                     Ativa = model.Ativa,
                     IdCategoriaPai = model.IdCategoriaPai,
-                    IdTemplate = model.IdTemplate,
-                    IdIdioma = model.IdIdioma,
+                    IdTemplate = model.IdTemplate.Value,
+                    IdIdioma = model.IdIdioma.Value,
                     GrupoIdioma = new GrupoIdioma
                     {
                         TipoGrupoIdioma = "categoria"

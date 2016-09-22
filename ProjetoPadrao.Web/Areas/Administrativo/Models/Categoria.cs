@@ -26,16 +26,17 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Models
         [Display(Name = "Ativa")]
         public bool Ativa { get; set; }
 
-        [Display(Name = "Categoria Pai")]
+		[Required]
+		[Display(Name = "Categoria Pai")]
         public Nullable<int> IdCategoriaPai { get; set; }
 
         [Required]
         [Display(Name = "Template")]
-        public int IdTemplate { get; set; }
+        public int? IdTemplate { get; set; }
 
         [Required]
         [Display(Name = "Idioma")]
-        public int IdIdioma { get; set; }
+        public int? IdIdioma { get; set; }
     }
 
     public class CategoriaEditar : CategoriaNovo
@@ -43,11 +44,11 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Models
         [Required]
         [HiddenInput]
         [Display(Name = "ID da Categoria")]
-        public int IdCategoria { get; set; }
+        public int? IdCategoria { get; set; }
 
         [Required]
         [HiddenInput]
         [Display(Name = "ID do Grupo de Idiomas")]
-        public int IdGrupoIdioma { get; set; }
+        public int? IdGrupoIdioma { get; set; }
     }
 }

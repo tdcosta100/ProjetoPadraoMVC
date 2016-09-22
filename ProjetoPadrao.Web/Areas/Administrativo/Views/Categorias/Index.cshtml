@@ -108,11 +108,14 @@
                 {
                     event.preventDefault();
 
-                    $(".modal-body", this).load("@Url.Action("Novo", "Categorias")", function (response, status, xhr)
+                    $("#modal-carregando").modal("show");
+
+                    $(".modal-body", this).load("@Url.Action("Novo", "Categorias")", $.param($.extend({ carregarFormulario: true }, $(this).data("dados"))), function (response, status, xhr)
                     {
+                        $("#modal-carregando").modal("hide");
+
                         if (status == "error")
                         {
-
                         }
                         else
                         {
@@ -158,7 +161,7 @@
                         }
                     });
 
-                    $(this).data("loaded", false);
+                    $(this).removeData(["loaded", "dados", "closeConfirmed"]);
                 }
             });
 
@@ -213,9 +216,16 @@
                     items: {
                         adicionarSubcategoria: {
                             label: "Adicionar subcategoria",
-                            action: function ()
+                            action: function (data)
                             {
-                                console.log([this, arguments]);
+                                var instance = $.jstree.reference(data.reference);
+                                var node = instance.get_node(data.reference);
+
+                                $("#modal-formulario").data("dados", { IdCategoriaPai: node.data.dados.idCategoria, IdIdioma: node.data.dados.idIdioma }).modal("show");
+                            },
+                            _disabled: function ()
+                            {
+                                return $("#btn-organizar-categorias").hasClass("active");
                             }
                         },
                         editar: {
@@ -223,6 +233,10 @@
                             action: function ()
                             {
                                 console.log([this, arguments]);
+                            },
+                            _disabled: function ()
+                            {
+                                return $("#btn-organizar-categorias").hasClass("active");
                             }
                         },
                         excluir: {
@@ -230,6 +244,10 @@
                             action: function ()
                             {
                                 console.log([this, arguments]);
+                            },
+                            _disabled: function ()
+                            {
+                                return $("#btn-organizar-categorias").hasClass("active");
                             }
                         }
                     }
@@ -277,7 +295,10 @@
 
                 $($(form).serializeArray()).each(function ()
                 {
-                    dados[this.name] = this.value;
+                    if (!(this.name in dados))
+                    {
+                        dados[this.name] = this.value;
+                    }
                 });
 
                 $("#modal-carregando").modal("show");
