@@ -32,7 +32,6 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
 		[HttpGet]
         public ActionResult Novo(bool? carregarFormulario, Models.CategoriaNovo model)
         {
-            ViewBag.Categorias = CategoriaDAO.Listar();
             ViewBag.Idiomas = IdiomaDAO.Listar();
             ViewBag.Templates = TemplateDAO.Listar();
 

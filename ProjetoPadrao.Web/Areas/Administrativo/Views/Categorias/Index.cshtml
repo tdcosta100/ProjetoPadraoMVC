@@ -224,7 +224,6 @@
                 core: {
                     check_callback: function (operation, node, node_parent, node_position, more)
                     {
-                        //console.log([this, arguments]);
                         return $("#btn-organizar-categorias").hasClass("active");
                     }
                 },
@@ -315,6 +314,11 @@
                         event.editor.updateElement();
                     }
                 }
+            });
+
+            $("#modal-formulario #IdCategoriaPai").on("change", function ()
+            {
+                $("#modal-formulario #IdIdioma").val($("#modal-formulario #IdCategoriaPai optgroup:has(option:selected)").data("idIdioma"));
             });
 
             $("#modal-formulario form").data("validator").settings.submitHandler = function (form)
