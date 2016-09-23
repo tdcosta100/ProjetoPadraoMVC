@@ -18,8 +18,8 @@
 <p>
     <button type="button" class="btn btn-primary" id="btn-adicionar-categoria" data-toggle="modal" data-target="#modal-formulario">Adicionar categoria</button>
     <button type="button" class="btn btn-warning" id="btn-organizar-categorias" data-toggle="button" aria-pressed="false" autocomplete="off">Organizar categorias</button>
-    <button type="button" class="btn btn-danger" id="btn-organizar-categorias-cancelar" data-toggle="modal" data-target="#modal-confirmacao">Cancelar</button>
-    <button type="button" class="btn btn-success" id="btn-organizar-categorias-salvar" data-toggle="modal" data-target="#modal-confirmacao">Salvar</button>
+    <button type="button" class="btn btn-danger" id="btn-organizar-categorias-cancelar">Cancelar</button>
+    <button type="button" class="btn btn-success" id="btn-organizar-categorias-salvar">Salvar</button>
 </p>
 
 <div class="arvore-categorias-template" style="display: none;">
@@ -136,7 +136,11 @@
                 {
                     event.preventDefault();
 
-                    $("#modal-confirmacao").modal("show");
+                    ModalConfirmCancel("Confirmar cancelamento", "<p>Deseja realmente cancelar? As alterações serão perdidas.</p>", "Confirmar", "Voltar", function ()
+                    {
+                        $("#modal-formulario").data("closeConfirmed", true);
+                        $("#modal-formulario").modal("hide");
+                    });
                 }
                 else
                 {
@@ -190,6 +194,23 @@
                 }, 0);
             });
 
+            $("#btn-organizar-categorias-cancelar").on("click", function ()
+            {
+                ModalConfirmCancel("Confirmar cancelamento", "<p>Tem certeza de que deseja cancelar? Todas as alterações serão perdidas.</p>", "Confirmar", "Voltar", function ()
+                {
+                    $("#btn-organizar-categorias").click();
+                    recriarArvoreCategorias();
+                });
+            });
+
+            $("#btn-organizar-categorias-salvar").on("click", function ()
+            {
+                ModalConfirmCancel("Confirmar alterações", "<p>Tem certeza de que deseja salvar? As alterações não poderão ser desfeitas.</p>", "Confirmar", "Voltar", function ()
+                {
+                    $("#btn-organizar-categorias").click();
+                });
+            });
+
             $("#btn-organizar-categorias-salvar, #btn-organizar-categorias-cancelar").hide();
 
             carregarArvoreCategorias();
@@ -203,8 +224,8 @@
                 core: {
                     check_callback: function (operation, node, node_parent, node_position, more)
                     {
-                        console.log([this, arguments]);
-                        return $(".arvore-categorias").data("permitirAlteracoesEstrutura") && true;
+                        //console.log([this, arguments]);
+                        return $("#btn-organizar-categorias").hasClass("active");
                     }
                 },
                 plugins: [
@@ -276,6 +297,13 @@
             });
         }
 
+        function recriarArvoreCategorias()
+        {
+            $(".arvore-categorias").jstree("destroy").remove();
+
+            carregarArvoreCategorias();
+        }
+
         function configurarFormulario()
         {
             $.validator.unobtrusive.parse("#modal-formulario");
@@ -311,12 +339,14 @@
                     {
                         $(".arvore-categorias-template").empty().load("@Url.Action("ArvoreCategorias", "Categorias")", function (response, status, xhr)
                         {
-                            $(".arvore-categorias").jstree("destroy").remove();
-
-                            carregarArvoreCategorias();
+                            recriarArvoreCategorias();
                         });
 
-                        $("#modal-sucesso").modal("show");
+                        $("#modal-formulario").data("closeConfirmed", true);
+                        $("#modal-formulario").modal("hide");
+
+                        ModalSucesso("Sucesso", "<p>Dados salvos com sucesso.</p>", "Ok");
+
                     },
                     error: function (xhr, status, error)
                     {
