@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ProjetoPadrao.Dados.Entidades.Categoria>
 
 <ul>
-@foreach (var categoria in Model)
+@foreach (var categoria in Model.OrderBy(c => c.Ordem))
 {
     <li data-jstree="@Json.Encode(new { type = (categoria.CategoriaPai != null) ? "categoria" : "home" })" data-dados="@Json.Encode(new { idCategoria = categoria.IdCategoria, idIdioma = categoria.IdIdioma })">
         @categoria.Nome

@@ -28,7 +28,7 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Models
 
 		[Required]
 		[Display(Name = "Categoria Pai")]
-        public Nullable<int> IdCategoriaPai { get; set; }
+        public int? IdCategoriaPai { get; set; }
 
         [Required]
         [Display(Name = "Template")]
@@ -50,5 +50,16 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Models
         [HiddenInput]
         [Display(Name = "ID do Grupo de Idiomas")]
         public int? IdGrupoIdioma { get; set; }
+    }
+
+    public class CategoriaOrganizar
+    {
+        [Required]
+        public int? IdCategoria { get; set; }
+
+        public int? IdCategoriaPai { get; set; }
+
+        [Required]
+        public int? Ordem { get; set; }
     }
 }

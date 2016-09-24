@@ -16,6 +16,13 @@
     
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @if (Model is ProjetoPadrao.Web.Areas.Administrativo.Models.CategoriaEditar)
+        {
+            @Html.HiddenFor(model => (Model as ProjetoPadrao.Web.Areas.Administrativo.Models.CategoriaEditar).IdCategoria)
+            @Html.HiddenFor(model => (Model as ProjetoPadrao.Web.Areas.Administrativo.Models.CategoriaEditar).IdGrupoIdioma)
+        }
+
         <div class="form-group">
             @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -60,7 +67,7 @@
                     <optgroup label="@idioma.Nome" data-id-idioma="@idioma.IdIdioma">
                         @foreach (var categoria in idioma.Categorias)
                         {
-                        <option value="@categoria.IdIdioma">@categoria.Nome</option>
+                        <option value="@categoria.IdCategoria"@((Model != null && Model.IdCategoriaPai.HasValue && Model.IdCategoriaPai.Value == categoria.IdCategoria) ? " selected" : null)>@categoria.Nome</option>
                         }
                     </optgroup>
                     }
@@ -81,10 +88,7 @@
             @Html.LabelFor(model => model.IdIdioma, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.IdIdioma, idiomas.Select(i => new SelectListItem { Value = i.IdIdioma.ToString(), Text = i.Nome }), "Selecione uma categoria", atributos.Concat(atributosDesabilitado).ToDictionary(a => a.Key, a => a.Value))
-                @if (Model != null && Model.IdIdioma.HasValue)
-                {
-                    @Html.HiddenFor(model => model.IdIdioma)
-                }
+                @Html.HiddenFor(model => model.IdIdioma)
                 @Html.ValidationMessageFor(model => model.IdIdioma, "", new { @class = "text-danger" })
             </div>
         </div>

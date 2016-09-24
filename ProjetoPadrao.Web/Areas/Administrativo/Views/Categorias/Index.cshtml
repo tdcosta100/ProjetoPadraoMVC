@@ -10,13 +10,13 @@
         categoria.Subcategorias = lookupCategorias[categoria.IdCategoria].OrderBy(c => c.Ordem).ToList();
     }
 
-    var arvoreCategorias = lookupCategorias[null].OrderBy(c => c.Ordem);
+    var arvoreCategorias = lookupCategorias[null];
 }
 
 <h2>Categorias</h2>
 
 <p>
-    <button type="button" class="btn btn-primary" id="btn-adicionar-categoria" data-toggle="modal" data-target="#modal-formulario">Adicionar categoria</button>
+    <button type="button" class="btn btn-primary" id="btn-adicionar-categoria" data-toggle="modal" data-target="#modal-formulario" autocomplete="off">Adicionar categoria</button>
     <button type="button" class="btn btn-warning" id="btn-organizar-categorias" data-toggle="button" aria-pressed="false" autocomplete="off">Organizar categorias</button>
     <button type="button" class="btn btn-danger" id="btn-organizar-categorias-cancelar">Cancelar</button>
     <button type="button" class="btn btn-success" id="btn-organizar-categorias-salvar">Salvar</button>
@@ -44,43 +44,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-confirmacao" tabindex="-1" role="dialog" aria-labelledby="modal-confirmacao">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modal-formulario-label">Confirmar cancelamento</h4>
-            </div>
-            <div class="modal-body">
-                <p>Deseja realmente cancelar? As alterações serão perdidas.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Voltar</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" id="btn-confirmar">Confirmar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modal-sucesso" tabindex="-1" role="dialog" aria-labelledby="modal-sucesso">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modal-formulario-label">Sucesso</h4>
-            </div>
-            <div class="modal-body">
-                <p>Dados salvos com sucesso.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" id="btn-sucesso">Ok</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
 @section css {
     @Styles.Render("~/Content/CSS/jstree-themes/default/style.min.css")
     <style type="text/css">
@@ -89,7 +52,7 @@
             text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000;
         }
 
-        .jstree-open .glyphicon.glyphicon-folder-close:before {
+        .jstree-open > .jstree-anchor > .glyphicon.glyphicon-folder-close:before {
             content: "\e118";
         }
     </style>
@@ -110,7 +73,7 @@
 
                     $("#modal-carregando").modal("show");
 
-                    $(".modal-body", this).load("@Url.Action("Novo", "Categorias")", $.param($.extend({ carregarFormulario: true }, $(this).data("dados"))), function (response, status, xhr)
+                    $(".modal-body", this).load(($(this).data("acao") == "editar") ? "@Url.Action("Editar", "Categorias")" : "@Url.Action("Novo", "Categorias")", $.param($.extend({ carregarFormulario: true }, $(this).data("dados"))), function (response, status, xhr)
                     {
                         $("#modal-carregando").modal("hide");
 
@@ -165,14 +128,8 @@
                         }
                     });
 
-                    $(this).removeData(["loaded", "dados", "closeConfirmed"]);
+                    $(this).removeData(["loaded", "acao", "dados", "closeConfirmed"]);
                 }
-            });
-
-            $("#btn-confirmar, #btn-sucesso").on("click", function ()
-            {
-                $("#modal-formulario").data("closeConfirmed", true);
-                $("#modal-formulario").modal("hide");
             });
 
             $("#btn-organizar-categorias").on("click", function ()
@@ -207,7 +164,40 @@
             {
                 ModalConfirmCancel("Confirmar alterações", "<p>Tem certeza de que deseja salvar? As alterações não poderão ser desfeitas.</p>", "Confirmar", "Voltar", function ()
                 {
-                    $("#btn-organizar-categorias").click();
+                    var categoriasOrganizar = $(".arvore-categorias .jstree-node").map(function ()
+                    {
+                        return {
+                            IdCategoria: $(this).data("dados").idCategoria,
+                            IdCategoriaPai: $(this).parents(".jstree-node:first").length ? $(this).parents(".jstree-node:first").data("dados").idCategoria : null,
+                            Ordem: $(this).index() + 1
+                        };
+                    }).get();
+
+                    $("#modal-carregando").modal("show");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Categorias/Organizar",
+                        data: JSON.stringify(categoriasOrganizar),
+                        contentType: "application/json",
+                        success: function (data, status, xhr)
+                        {
+                            $("#btn-organizar-categorias").click();
+
+                            $(".arvore-categorias-template").empty().load("@Url.Action("ArvoreCategorias", "Categorias")", function (response, status, xhr)
+                            {
+                                recriarArvoreCategorias();
+                            });
+                        },
+                        error: function (xhr, status, error)
+                        {
+
+                        },
+                        complete: function (xhr, status)
+                        {
+                            $("#modal-carregando").modal("hide");
+                        }
+                    })
                 });
             });
 
@@ -241,7 +231,13 @@
                                 var instance = $.jstree.reference(data.reference);
                                 var node = instance.get_node(data.reference);
 
-                                $("#modal-formulario").data("dados", { IdCategoriaPai: node.data.dados.idCategoria, IdIdioma: node.data.dados.idIdioma }).modal("show");
+                                $("#modal-formulario").data({
+                                    acao: "novo",
+                                    dados: {
+                                        IdCategoriaPai: node.data.dados.idCategoria,
+                                        IdIdioma: node.data.dados.idIdioma
+                                    }
+                                }).modal("show");
                             },
                             _disabled: function ()
                             {
@@ -250,9 +246,17 @@
                         },
                         editar: {
                             label: "Editar",
-                            action: function ()
+                            action: function (data)
                             {
-                                console.log([this, arguments]);
+                                var instance = $.jstree.reference(data.reference);
+                                var node = instance.get_node(data.reference);
+
+                                $("#modal-formulario").data({
+                                    acao: "editar",
+                                    dados: {
+                                        IdCategoria: node.data.dados.idCategoria
+                                    }
+                                }).modal("show");
                             },
                             _disabled: function ()
                             {
@@ -261,7 +265,7 @@
                         },
                         excluir: {
                             label: "Excluir",
-                            action: function ()
+                            action: function (data)
                             {
                                 console.log([this, arguments]);
                             },
@@ -337,7 +341,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "@Url.Action("Novo", "Categorias")",
+                    url: ($("#modal-formulario").data("acao") == "editar") ? "@Url.Action("Editar", "Categorias")" : "@Url.Action("Novo", "Categorias")",
                     data: dados,
                     success: function (data, status, xhr)
                     {
@@ -349,7 +353,7 @@
                         $("#modal-formulario").data("closeConfirmed", true);
                         $("#modal-formulario").modal("hide");
 
-                        ModalSucesso("Sucesso", "<p>Dados salvos com sucesso.</p>", "Ok");
+                        ModalSuccess("Sucesso", "<p>Dados salvos com sucesso.</p>", "Ok");
 
                     },
                     error: function (xhr, status, error)
