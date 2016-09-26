@@ -29,6 +29,7 @@ namespace ProjetoPadrao.Dados.Entidades
         public Nullable<System.DateTime> DataModificacao { get; set; }
         public Nullable<System.DateTime> DataPublicacao { get; set; }
         public bool Ativo { get; set; }
+        public int IdCategoria { get; set; }
         public int IdTemplate { get; set; }
         public Nullable<int> IdArquivoImagemChamada { get; set; }
         public int IdGrupoIdioma { get; set; }
@@ -40,5 +41,6 @@ namespace ProjetoPadrao.Dados.Entidades
         public virtual Template Template { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GaleriaConteudo> GaleriasConteudo { get; set; }
+        public virtual Categoria Categoria { get; set; }
     }
 }

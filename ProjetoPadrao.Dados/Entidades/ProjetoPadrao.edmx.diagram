@@ -7,12 +7,12 @@
       <Diagram DiagramId="86023a1ff5a24a81bd68e5387bb80696" Name="Diagram1">
         <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Arquivo" Width="1.5" PointX="2.75" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Audio" Width="1.5" PointX="0.5" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Categoria" Width="1.5" PointX="7.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Categoria" Width="1.5" PointX="7.25" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Conteudo" Width="1.5" PointX="7.25" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Documento" Width="1.5" PointX="0.5" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Galeria" Width="1.5" PointX="9.5" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.GaleriaConteudo" Width="1.5" PointX="9.5" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.GrupoIdioma" Width="1.5" PointX="9.5" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.GrupoIdioma" Width="1.5" PointX="9.5" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Idioma" Width="1.5" PointX="9.5" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Imagem" Width="1.5" PointX="5" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjetoPadrao.Dados.Entidades.Midia" Width="1.5" PointX="2.75" PointY="3.25" IsExpanded="true" />
@@ -38,6 +38,7 @@
         <InheritanceConnector EntityType="ProjetoPadrao.Dados.Entidades.Video" />
         <InheritanceConnector EntityType="ProjetoPadrao.Dados.Entidades.Video" />
         <InheritanceConnector EntityType="ProjetoPadrao.Dados.Entidades.Imagem" />
+        <AssociationConnector Association="ProjetoPadrao.Dados.Entidades.FK_Conteudo_Categoria" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

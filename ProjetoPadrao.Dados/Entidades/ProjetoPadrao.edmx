@@ -51,6 +51,7 @@
           <Property Name="DataModificacao" Type="datetime" />
           <Property Name="DataPublicacao" Type="datetime" />
           <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="IdCategoria" Type="int" Nullable="false" />
           <Property Name="IdTemplate" Type="int" Nullable="false" />
           <Property Name="IdArquivoImagemChamada" Type="int" />
           <Property Name="IdGrupoIdioma" Type="int" Nullable="false" />
@@ -196,6 +197,18 @@
             </Principal>
             <Dependent Role="Categoria">
               <PropertyRef Name="IdTemplate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conteudo_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Conteudo" Type="Self.Conteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Conteudo">
+              <PropertyRef Name="IdCategoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -390,6 +403,10 @@
             <End Role="Template" EntitySet="Template" />
             <End Role="Categoria" EntitySet="Categoria" />
           </AssociationSet>
+          <AssociationSet Name="FK_Conteudo_Categoria" Association="Self.FK_Conteudo_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Conteudo" EntitySet="Conteudo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Conteudo_GrupoIdioma" Association="Self.FK_Conteudo_GrupoIdioma">
             <End Role="GrupoIdioma" EntitySet="GrupoIdioma" />
             <End Role="Conteudo" EntitySet="Conteudo" />
@@ -481,6 +498,7 @@
           <NavigationProperty Name="GrupoIdioma" Relationship="Self.FK_Categoria_GrupoIdioma" FromRole="Categoria" ToRole="GrupoIdioma" />
           <NavigationProperty Name="Idioma" Relationship="Self.FK_Categoria_Idioma" FromRole="Categoria" ToRole="Idioma" />
           <NavigationProperty Name="Template" Relationship="Self.FK_Categoria_Template" FromRole="Categoria" ToRole="Template" />
+          <NavigationProperty Name="Conteudos" Relationship="ProjetoPadrao.Dados.Entidades.FK_Conteudo_Categoria" FromRole="Categoria" ToRole="Conteudo" />
         </EntityType>
         <EntityType Name="Conteudo">
           <Key>
@@ -495,6 +513,7 @@
           <Property Name="DataModificacao" Type="DateTime" Precision="3" />
           <Property Name="DataPublicacao" Type="DateTime" Precision="3" />
           <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" />
           <Property Name="IdTemplate" Type="Int32" Nullable="false" />
           <Property Name="IdArquivoImagemChamada" Type="Int32" />
           <Property Name="IdGrupoIdioma" Type="Int32" Nullable="false" />
@@ -504,6 +523,7 @@
           <NavigationProperty Name="ImagemChamada" Relationship="Self.FK_Conteudo_Imagem" FromRole="Conteudo" ToRole="Imagem" />
           <NavigationProperty Name="Template" Relationship="Self.FK_Conteudo_Template" FromRole="Conteudo" ToRole="Template" />
           <NavigationProperty Name="GaleriasConteudo" Relationship="Self.FK_GaleriaConteudo_Conteudo" FromRole="Conteudo" ToRole="GaleriaConteudo" />
+          <NavigationProperty Name="Categoria" Relationship="ProjetoPadrao.Dados.Entidades.FK_Conteudo_Categoria" FromRole="Conteudo" ToRole="Categoria" />
         </EntityType>
         <EntityType Name="Documento" BaseType="ProjetoPadrao.Dados.Entidades.Arquivo">
           <Property Name="TipoDocumento" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
@@ -806,7 +826,23 @@
             <End Role="Midia" EntitySet="Arquivos" />
             <End Role="MidiaGaleria" EntitySet="MidiasGalerias" />
           </AssociationSet>
+          <AssociationSet Name="FK_Conteudo_Categoria" Association="ProjetoPadrao.Dados.Entidades.FK_Conteudo_Categoria">
+            <End Role="Categoria" EntitySet="Categorias" />
+            <End Role="Conteudo" EntitySet="Conteudos" />
+          </AssociationSet>
           </EntityContainer>
+        <Association Name="FK_Conteudo_Categoria">
+          <End Type="ProjetoPadrao.Dados.Entidades.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="ProjetoPadrao.Dados.Entidades.Conteudo" Role="Conteudo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Conteudo">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -886,6 +922,7 @@
                 <ScalarProperty Name="DataModificacao" ColumnName="DataModificacao" />
                 <ScalarProperty Name="DataPublicacao" ColumnName="DataPublicacao" />
                 <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
                 <ScalarProperty Name="IdTemplate" ColumnName="IdTemplate" />
                 <ScalarProperty Name="IdArquivoImagemChamada" ColumnName="IdArquivoImagemChamada" />
                 <ScalarProperty Name="IdGrupoIdioma" ColumnName="IdGrupoIdioma" />

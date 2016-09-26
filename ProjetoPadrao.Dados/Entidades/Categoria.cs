@@ -18,6 +18,7 @@ namespace ProjetoPadrao.Dados.Entidades
         public Categoria()
         {
             this.Subcategorias = new HashSet<Categoria>();
+            this.Conteudos = new HashSet<Conteudo>();
         }
     
         public int IdCategoria { get; set; }
@@ -37,5 +38,7 @@ namespace ProjetoPadrao.Dados.Entidades
         public virtual GrupoIdioma GrupoIdioma { get; set; }
         public virtual Idioma Idioma { get; set; }
         public virtual Template Template { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Conteudo> Conteudos { get; set; }
     }
 }

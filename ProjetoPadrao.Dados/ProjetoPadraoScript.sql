@@ -219,6 +219,7 @@ CREATE TABLE [dbo].[Conteudo] (
 	[DataModificacao]        DATETIME       NULL,
 	[DataPublicacao]         DATETIME       NULL,
 	[Ativo]                  BIT            NOT NULL,
+    [IdCategoria]            INT            NOT NULL,
     [IdTemplate]             INT            NOT NULL,
     [IdArquivoImagemChamada] INT            NULL,
     [IdGrupoIdioma]          INT            NOT NULL,
@@ -668,6 +669,30 @@ IF @@TRANCOUNT = 0
 
 
 GO
+PRINT N'Creating [dbo].[FK_Conteudo_Categoria]...';
+
+
+GO
+ALTER TABLE [dbo].[Conteudo] WITH NOCHECK
+    ADD CONSTRAINT [FK_Conteudo_Categoria] FOREIGN KEY ([IdCategoria]) REFERENCES [dbo].[Categoria] ([IdCategoria]);
+
+
+GO
+IF @@ERROR <> 0
+   AND @@TRANCOUNT > 0
+    BEGIN
+        ROLLBACK;
+    END
+
+IF @@TRANCOUNT = 0
+    BEGIN
+        INSERT  INTO #tmpErrors (Error)
+        VALUES                 (1);
+        BEGIN TRANSACTION;
+    END
+
+
+GO
 PRINT N'Creating [dbo].[FK_Conteudo_Template]...';
 
 
@@ -1008,6 +1033,8 @@ ALTER TABLE [dbo].[Categoria] WITH CHECK CHECK CONSTRAINT [FK_Categoria_Template
 ALTER TABLE [dbo].[Categoria] WITH CHECK CHECK CONSTRAINT [FK_Categoria_GrupoIdioma];
 
 ALTER TABLE [dbo].[Categoria] WITH CHECK CHECK CONSTRAINT [FK_Categoria_Idioma];
+
+ALTER TABLE [dbo].[Conteudo] WITH CHECK CHECK CONSTRAINT [FK_Conteudo_Categoria];
 
 ALTER TABLE [dbo].[Conteudo] WITH CHECK CHECK CONSTRAINT [FK_Conteudo_Template];
 
