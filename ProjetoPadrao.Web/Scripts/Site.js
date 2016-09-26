@@ -1,5 +1,10 @@
 ﻿jQuery(function ($)
 {
+    $(document).on("click", "a[href='#']", function (event)
+    {
+        event.preventDefault();
+    });
+
     $(document).on("hidden.bs.modal", ".modal", function (event)
     {
         $(this).removeClass("modal-stack");
@@ -111,7 +116,7 @@ function Modal(options)
 	return modalElement;
 }
 
-function ModalSuccess(title, content, buttonContent)
+function ModalMessage(title, content, buttonContent)
 {
     return Modal({
         title: title,

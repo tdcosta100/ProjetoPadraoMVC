@@ -16,7 +16,7 @@
 <h2>Categorias</h2>
 
 <p>
-    <button type="button" class="btn btn-primary" id="btn-adicionar-categoria" data-toggle="modal" data-target="#modal-formulario" autocomplete="off">Adicionar categoria</button>
+    <button type="button" class="btn btn-primary" id="btn-adicionar-categoria" autocomplete="off">Adicionar categoria</button>
     <button type="button" class="btn btn-warning" id="btn-organizar-categorias" data-toggle="button" aria-pressed="false" autocomplete="off">Organizar categorias</button>
     <button type="button" class="btn btn-danger" id="btn-organizar-categorias-cancelar">Cancelar</button>
     <button type="button" class="btn btn-success" id="btn-organizar-categorias-salvar">Salvar</button>
@@ -24,24 +24,6 @@
 
 <div class="arvore-categorias-template" style="display: none;">
     @Html.Partial("ArvoreCategorias", arvoreCategorias)
-</div>
-
-<div class="modal fade" id="modal-formulario" tabindex="-1" role="dialog" aria-labelledby="modal-formulario">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modal-formulario-label">Adicionar categoria</h4>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success" id="btn-salvar">Salvar</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 @section css {
@@ -59,318 +41,24 @@
 }
 
 @section scripts {
+    <script type="text/javascript">
+            var Urls = {
+                Categorias: {
+                    ArvoreCategorias: "@Url.Action("ArvoreCategorias", "Categorias")",
+                    Novo: "@Url.Action("Novo", "Categorias")",
+                    Editar: "@Url.Action("Editar", "Categorias")",
+                    Organizar: "@Url.Action("Organizar", "Categorias")"
+                },
+                Conteudos: {
+                    Index: "@Url.Action("Index", "Conteudos")",
+                    Novo: "@Url.Action("Novo", "Conteudos")",
+                    Editar: "@Url.Action("Editar", "Conteudos")"
+                }
+            };
+    </script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/ckeditor/ckeditor.js")
     @Scripts.Render("~/Scripts/jstree.min.js")
-    <script type="text/javascript">
-        jQuery(function ($)
-        {
-            $("#modal-formulario").on("show.bs.modal", function (event)
-            {
-                if (!$(this).data("loaded"))
-                {
-                    event.preventDefault();
-
-                    $("#modal-carregando").modal("show");
-
-                    $(".modal-body", this).load(($(this).data("acao") == "editar") ? "@Url.Action("Editar", "Categorias")" : "@Url.Action("Novo", "Categorias")", $.param($.extend({ carregarFormulario: true }, $(this).data("dados"))), function (response, status, xhr)
-                    {
-                        $("#modal-carregando").modal("hide");
-
-                        if (status == "error")
-                        {
-                        }
-                        else
-                        {
-                            configurarFormulario();
-
-                            $("#modal-formulario").data({
-                                loaded: true,
-                                closeConfirmed: false
-                            }).modal("show");
-                        }
-                    });
-                }
-            });
-
-            $("#modal-formulario").on("hide.bs.modal", function (event)
-            {
-                if (!$(this).data("closeConfirmed"))
-                {
-                    event.preventDefault();
-
-                    ModalConfirmCancel("Confirmar cancelamento", "<p>Deseja realmente cancelar? As alterações serão perdidas.</p>", "Confirmar", "Voltar", function ()
-                    {
-                        $("#modal-formulario").data("closeConfirmed", true);
-                        $("#modal-formulario").modal("hide");
-                    });
-                }
-                else
-                {
-                    $("form").each(function ()
-                    {
-                        var validator = $(this).data("validator");
-
-                        if (validator)
-                        {
-                            $(":input." + validator.settings.errorClass, this).removeClass(validator.settings.errorClass);
-                            $(":input." + validator.settings.pendingClass, this).removeClass(validator.settings.pendingClass);
-                            $(":input." + validator.settings.validClass, this).removeClass(validator.settings.validClass);
-                            $(".field-validation-error " + validator.settings.errorElement, this).remove();
-
-                            $(this).removeData("unobtrusiveValidation");
-                            validator.destroy();
-                        }
-
-                        if (CKEDITOR.instances["HTML"])
-                        {
-                            CKEDITOR.instances["HTML"].destroy();
-                        }
-                    });
-
-                    $(this).removeData(["loaded", "acao", "dados", "closeConfirmed"]);
-                }
-            });
-
-            $("#btn-organizar-categorias").on("click", function ()
-            {
-                setTimeout(function ()
-                {
-                    if($("#btn-organizar-categorias").hasClass("active"))
-                    {
-                        $("#btn-adicionar-categoria").prop("disabled", true);
-                        $("#btn-organizar-categorias").hide();
-                        $("#btn-organizar-categorias-salvar, #btn-organizar-categorias-cancelar").show();
-                    }
-                    else
-                    {
-                        $("#btn-adicionar-categoria").prop("disabled", false);
-                        $("#btn-organizar-categorias").show();
-                        $("#btn-organizar-categorias-salvar, #btn-organizar-categorias-cancelar").hide();
-                    }
-                }, 0);
-            });
-
-            $("#btn-organizar-categorias-cancelar").on("click", function ()
-            {
-                ModalConfirmCancel("Confirmar cancelamento", "<p>Tem certeza de que deseja cancelar? Todas as alterações serão perdidas.</p>", "Confirmar", "Voltar", function ()
-                {
-                    $("#btn-organizar-categorias").click();
-                    recriarArvoreCategorias();
-                });
-            });
-
-            $("#btn-organizar-categorias-salvar").on("click", function ()
-            {
-                ModalConfirmCancel("Confirmar alterações", "<p>Tem certeza de que deseja salvar? As alterações não poderão ser desfeitas.</p>", "Confirmar", "Voltar", function ()
-                {
-                    var categoriasOrganizar = $(".arvore-categorias .jstree-node").map(function ()
-                    {
-                        return {
-                            IdCategoria: $(this).data("dados").idCategoria,
-                            IdCategoriaPai: $(this).parents(".jstree-node:first").length ? $(this).parents(".jstree-node:first").data("dados").idCategoria : null,
-                            Ordem: $(this).index() + 1
-                        };
-                    }).get();
-
-                    $("#modal-carregando").modal("show");
-
-                    $.ajax({
-                        type: "POST",
-                        url: "/Admin/Categorias/Organizar",
-                        data: JSON.stringify(categoriasOrganizar),
-                        contentType: "application/json",
-                        success: function (data, status, xhr)
-                        {
-                            $("#btn-organizar-categorias").click();
-
-                            $(".arvore-categorias-template").empty().load("@Url.Action("ArvoreCategorias", "Categorias")", function (response, status, xhr)
-                            {
-                                recriarArvoreCategorias();
-                            });
-                        },
-                        error: function (xhr, status, error)
-                        {
-
-                        },
-                        complete: function (xhr, status)
-                        {
-                            $("#modal-carregando").modal("hide");
-                        }
-                    })
-                });
-            });
-
-            $("#btn-organizar-categorias-salvar, #btn-organizar-categorias-cancelar").hide();
-
-            carregarArvoreCategorias();
-        });
-
-        function carregarArvoreCategorias()
-        {
-            $(".arvore-categorias-template").clone().removeClass("arvore-categorias-template").addClass("arvore-categorias").insertBefore(".arvore-categorias-template").show();
-
-            $(".arvore-categorias").jstree({
-                core: {
-                    check_callback: function (operation, node, node_parent, node_position, more)
-                    {
-                        return $("#btn-organizar-categorias").hasClass("active");
-                    }
-                },
-                plugins: [
-                    "contextmenu",
-                    "dnd",
-                    "types"
-                ],
-                contextmenu: {
-                    items: {
-                        adicionarSubcategoria: {
-                            label: "Adicionar subcategoria",
-                            action: function (data)
-                            {
-                                var instance = $.jstree.reference(data.reference);
-                                var node = instance.get_node(data.reference);
-
-                                $("#modal-formulario").data({
-                                    acao: "novo",
-                                    dados: {
-                                        IdCategoriaPai: node.data.dados.idCategoria,
-                                        IdIdioma: node.data.dados.idIdioma
-                                    }
-                                }).modal("show");
-                            },
-                            _disabled: function ()
-                            {
-                                return $("#btn-organizar-categorias").hasClass("active");
-                            }
-                        },
-                        editar: {
-                            label: "Editar",
-                            action: function (data)
-                            {
-                                var instance = $.jstree.reference(data.reference);
-                                var node = instance.get_node(data.reference);
-
-                                $("#modal-formulario").data({
-                                    acao: "editar",
-                                    dados: {
-                                        IdCategoria: node.data.dados.idCategoria
-                                    }
-                                }).modal("show");
-                            },
-                            _disabled: function ()
-                            {
-                                return $("#btn-organizar-categorias").hasClass("active");
-                            }
-                        },
-                        excluir: {
-                            label: "Excluir",
-                            action: function (data)
-                            {
-                                console.log([this, arguments]);
-                            },
-                            _disabled: function ()
-                            {
-                                return $("#btn-organizar-categorias").hasClass("active");
-                            }
-                        }
-                    }
-                },
-                dnd: {
-                    copy: false,
-                    drag_selection: false
-                },
-                types: {
-                    "#": {
-                        max_children: 1,
-                        valid_children: ["home"]
-                    },
-                    home: {
-                        icon: "glyphicon glyphicon-home",
-                        valid_children: ["categoria"]
-                    },
-                    categoria: {
-                        icon: "glyphicon glyphicon-folder-close",
-                        valid_children: ["categoria", "documento"]
-                    },
-                    documento: {
-                        icon: "glyphicon glyphicon-file"
-                    }
-                }
-            });
-        }
-
-        function recriarArvoreCategorias()
-        {
-            $(".arvore-categorias").jstree("destroy").remove();
-
-            carregarArvoreCategorias();
-        }
-
-        function configurarFormulario()
-        {
-            $.validator.unobtrusive.parse("#modal-formulario");
-
-            CKEDITOR.replace($("#modal-formulario #HTML").get(0), {
-                on: {
-                    "change": function (event)
-                    {
-                        event.editor.updateElement();
-                    }
-                }
-            });
-
-            $("#modal-formulario #IdCategoriaPai").on("change", function ()
-            {
-                $("#modal-formulario #IdIdioma").val($("#modal-formulario #IdCategoriaPai optgroup:has(option:selected)").data("idIdioma"));
-            });
-
-            $("#modal-formulario form").data("validator").settings.submitHandler = function (form)
-            {
-                var dados = {};
-
-                $($(form).serializeArray()).each(function ()
-                {
-                    if (!(this.name in dados))
-                    {
-                        dados[this.name] = this.value;
-                    }
-                });
-
-                $("#modal-carregando").modal("show");
-
-                $.ajax({
-                    type: "POST",
-                    url: ($("#modal-formulario").data("acao") == "editar") ? "@Url.Action("Editar", "Categorias")" : "@Url.Action("Novo", "Categorias")",
-                    data: dados,
-                    success: function (data, status, xhr)
-                    {
-                        $(".arvore-categorias-template").empty().load("@Url.Action("ArvoreCategorias", "Categorias")", function (response, status, xhr)
-                        {
-                            recriarArvoreCategorias();
-                        });
-
-                        $("#modal-formulario").data("closeConfirmed", true);
-                        $("#modal-formulario").modal("hide");
-
-                        ModalSuccess("Sucesso", "<p>Dados salvos com sucesso.</p>", "Ok");
-
-                    },
-                    error: function (xhr, status, error)
-                    {
-
-                    },
-                    complete: function (xhr, status)
-                    {
-                        $("#modal-carregando").modal("hide");
-                    }
-                });
-            };
-
-            $("#btn-salvar").off().on("click", function ()
-            {
-                $("#modal-formulario form").submit();
-            });
-        }
-    </script>
+    @Scripts.Render("~/Areas/Administrativo/Scripts/Categorias.js")
+    @Scripts.Render("~/Areas/Administrativo/Scripts/Conteudos.js")
 }

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ProjetoPadrao.Dados.Entidades.Conteudo>
+
+<p>
+    @Html.ActionLink("Adicionar conteúdo", "Novo", "Conteudos", null, htmlAttributes: new { @class = "btn btn-primary btn-adicionar-conteudo" })
+</p>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Data de publicação</th>
+        <th>Idioma</th>
+        <th>Template</th>
+        <th>Status</th>
+        <th>Ações</th>
+    </tr>
+
+@foreach (var conteudo in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => conteudo.IdConteudo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => conteudo.Titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => conteudo.DataPublicacao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => conteudo.Idioma.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => conteudo.Template.Nome)
+        </td>
+        <td>
+        @if (conteudo.Ativo)
+        {
+            <span class="label label-success">Ativo</span>
+        }
+        else
+        {
+            <span class="label label-danger">Inativo</span>
+        }
+        </td>
+        <td>
+            <a href="@Url.Action("Editar", "Conteudos", new { id = conteudo.IdConteudo })" class="btn btn-xs btn-warning btn-editar-conteudo">
+                <span class="glyphicon glyphicon-edit"></span>
+                Editar
+            </a>
+            <a href="@Url.Action("Excluir", "Conteudos", new { id = conteudo.IdConteudo })" class="btn btn-xs btn-danger btn-excluir-conteudo">
+                <span class="glyphicon glyphicon-trash"></span>
+                Excluir
+            </a>
+        </td>
+    </tr>
+}
+
+</table>

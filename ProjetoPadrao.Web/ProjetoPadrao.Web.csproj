@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administrativo\AdministrativoAreaRegistration.cs" />
     <Compile Include="Areas\Administrativo\Controllers\CategoriasController.cs" />
+    <Compile Include="Areas\Administrativo\Controllers\ConteudosController.cs" />
     <Compile Include="Areas\Administrativo\Controllers\HomeController.cs" />
     <Compile Include="Areas\Administrativo\Controllers\TemplatesController.cs" />
     <Compile Include="Areas\Administrativo\Models\Categoria.cs" />
@@ -188,6 +189,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Administrativo\Scripts\Categorias.js" />
+    <Content Include="Areas\Administrativo\Scripts\Conteudos.js" />
     <Content Include="Content\CSS\bootstrap-theme.css" />
     <Content Include="Content\CSS\bootstrap-theme.min.css" />
     <Content Include="Content\CSS\bootstrap.css" />
@@ -214,7 +217,7 @@
     <Content Include="Areas\Administrativo\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Administrativo\Views\Home\Index.cshtml" />
     <Content Include="Areas\Administrativo\Views\Templates\Index.cshtml" />
-    <Content Include="Areas\Administrativo\Views\Templates\Novo.cshtml" />
+    <Content Include="Areas\Administrativo\Views\Templates\NovoEditar.cshtml" />
     <Content Include="Areas\Administrativo\Views\Templates\Editar.cshtml" />
     <Content Include="bower.json" />
     <Content Include="gulpfile.js" />
@@ -1033,6 +1036,7 @@
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Areas\Administrativo\Views\Categorias\ArvoreCategorias.cshtml" />
     <Content Include="Areas\Administrativo\Views\Categorias\NovoEditar.cshtml" />
+    <Content Include="Areas\Administrativo\Views\Conteudos\Index.cshtml" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>

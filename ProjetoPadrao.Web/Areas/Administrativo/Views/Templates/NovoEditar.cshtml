@@ -1,15 +1,21 @@
 ﻿@model ProjetoPadrao.Web.Areas.Administrativo.Models.TemplateNovo
 
 @{
-    ViewBag.Title = "Adicionar Template";
+    var editar = Model is ProjetoPadrao.Web.Areas.Administrativo.Models.TemplateEditar;
+    ViewBag.Title = editar ? "Editar Template" : "Adicionar Template";
 }
 
-<h2>Adicionar template</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+
+    if (editar)
+    {
+        @Html.HiddenFor(model => (model as ProjetoPadrao.Web.Areas.Administrativo.Models.TemplateEditar).IdTemplate)
+    }
+
     <div class="form-horizontal">
         <h4>Dados</h4>
         <hr />
@@ -59,15 +65,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Salvar" class="btn btn-default" />
+                @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-danger" })
+                <button type="submit" class="btn btn-success">Salvar</button>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Cancelar", "Index")
-</div>
 
 @section css {
     <style type="text/css">

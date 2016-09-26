@@ -119,6 +119,32 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                 categoria.IdGrupoIdioma = model.IdGrupoIdioma.Value;
                 categoria.IdIdioma = model.IdIdioma.Value;
 
+                var pilhaArvore = new Stack<IEnumerator<Categoria>>();
+
+                pilhaArvore.Push((new List<Categoria> { categoria }).GetEnumerator());
+
+                do
+                {
+                    var currentEnumerator = pilhaArvore.Peek();
+
+                    if (currentEnumerator.MoveNext())
+                    {
+                        if (currentEnumerator.Current.Subcategorias.Any())
+                        {
+                            foreach (var subcategoria in currentEnumerator.Current.Subcategorias)
+                            {
+                                subcategoria.IdIdioma = currentEnumerator.Current.IdIdioma;
+                            }
+
+                            pilhaArvore.Push(currentEnumerator.Current.Subcategorias.GetEnumerator());
+                        }
+                    }
+                    else
+                    {
+                        pilhaArvore.Pop();
+                    }
+                } while (pilhaArvore.Count > 0);
+
                 CategoriaDAO.SalvarAlteracoesPendentes();
 
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.Accepted);
@@ -132,20 +158,45 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
         {
             if (ModelState.IsValid && models != null)
             {
-                var lookupModels = models.ToLookup(m => m.IdCategoria);
-                var idCategorias = lookupModels.Where(m => m.Key.HasValue).Select(m => m.Key.Value).ToArray();
+                var lookupModels = models.ToLookup(m => m.IdCategoriaPai);
+                var idCategorias = models.Select(m => m.IdCategoria.Value).ToArray();
+                var categorias = CategoriaDAO.ListarTracking().Where(c => idCategorias.Contains(c.IdCategoria)).ToDictionary(c => c.IdCategoria, c => c);
 
-                var categorias = CategoriaDAO.ListarTracking().Where(c => idCategorias.Contains(c.IdCategoria));
-
-                if (categorias.Count() == models.Count())
+                if (categorias.Count == models.Count())
                 {
-                    foreach (var categoria in categorias.ToList())
-                    {
-                        var model = lookupModels[categoria.IdCategoria].FirstOrDefault();
+                    var pilhaArvore = new Stack<IEnumerator<Models.CategoriaOrganizar>>();
 
-                        categoria.IdCategoriaPai = model.IdCategoriaPai;
-                        categoria.Ordem = model.Ordem.Value;
-                    }
+                    pilhaArvore.Push(lookupModels[null].GetEnumerator());
+
+                    do
+                    {
+                        var currentEnumerator = pilhaArvore.Peek();
+
+                        if (currentEnumerator.MoveNext())
+                        {
+                            var subModels = lookupModels[currentEnumerator.Current.IdCategoria];
+                            var categoria = categorias[currentEnumerator.Current.IdCategoria.Value];
+
+                            categoria.Subcategorias.Clear();
+
+                            if (subModels.Any())
+                            {
+                                foreach (var subcategoria in subModels.OrderBy(s => s.Ordem).Select(s => categorias[s.IdCategoria.Value]))
+                                {
+                                    subcategoria.CategoriaPai = categoria;
+                                    subcategoria.Idioma = categoria.Idioma;
+
+                                    categoria.Subcategorias.Add(subcategoria);
+                                }
+
+                                pilhaArvore.Push(lookupModels[currentEnumerator.Current.IdCategoria].GetEnumerator());
+                            }
+                        }
+                        else
+                        {
+                            pilhaArvore.Pop();
+                        }
+                    } while (pilhaArvore.Count > 0);
 
                     CategoriaDAO.SalvarAlteracoesPendentes();
 
@@ -154,6 +205,13 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
             }
 
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        public ActionResult Teste()
+        {
+            var teste = CategoriaDAO.Listar().ToLookup(c => c.IdCategoriaPai);
+
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.Accepted);
         }
     }
 }

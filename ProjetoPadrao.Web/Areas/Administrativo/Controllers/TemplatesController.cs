@@ -18,7 +18,7 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
 
         public ActionResult Novo()
         {
-            return View();
+            return View("NovoEditar");
         }
 
         [HttpPost]
@@ -40,7 +40,7 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(model);
+            return View("NovoEditar", model);
         }
 
         public ActionResult Editar(int? id)
@@ -61,7 +61,7 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                         IdArquivoImagemMiniatura = template.IdArquivoImagemMiniatura
                     };
 
-                    return View(model);
+                    return View("NovoEditar", model);
                 }
             }
 
@@ -91,7 +91,7 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                 }
             }
 
-            return View(model);
+            return View("NovoEditar", model);
         }
     }
 }

@@ -7,7 +7,7 @@
 <h2>Templates</h2>
 
 <p>
-    @Html.ActionLink("Adicionar template", "Novo")
+    @Html.ActionLink("Adicionar template", "Novo", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -18,23 +18,36 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var template in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.IdTemplate)
+            @Html.DisplayFor(modelItem => template.IdTemplate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Nome)
+            @Html.DisplayFor(modelItem => template.Nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Alias)
+            @Html.DisplayFor(modelItem => template.Alias)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ParseHTML)
+        @if (template.ParseHTML)
+        {
+            <span class="label label-success">Sim</span>
+        }
+        else
+        {
+            <span class="label label-info">Não</span>
+        }
         </td>
         <td>
-            @Html.ActionLink("Editar", "Editar", new { id = item.IdTemplate }) |
-            @Html.ActionLink("Excluir", "Excluir", new { id = item.IdTemplate })
+            <a href="@Url.Action("Editar", "Templates", new { id = template.IdTemplate })" class="btn btn-xs btn-warning">
+                <span class="glyphicon glyphicon-edit"></span>
+                Editar
+            </a>
+            <a href="@Url.Action("Excluir", "Templates", new { id = template.IdTemplate })" class="btn btn-xs btn-danger">
+                <span class="glyphicon glyphicon-trash"></span>
+                Excluir
+            </a>
         </td>
     </tr>
 }
