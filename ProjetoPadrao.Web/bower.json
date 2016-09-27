@@ -11,7 +11,8 @@
     "ckeditor": "ckeditor/ckeditor-releases#full/4.5.11",
     "ace-builds": "1.2.5",
     "jstree": "3.3.2",
-    "jstree-bootstrap-theme": "1.0.1"
+    "jstree-bootstrap-theme": "1.0.1",
+    "bootstrap-datepicker": "1.6.4"
   },
   "resolutions": {
     "bootstrap": "3.3.7",

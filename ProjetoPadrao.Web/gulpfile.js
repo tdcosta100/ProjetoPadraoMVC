@@ -89,6 +89,23 @@ var packages = {
             base: "dist/",
             dest: "Scripts/"
         }
+    ],
+    "bootstrap-datepicker": [
+        {
+            src: ["dist/css/**"],
+            base: "dist/css/",
+            dest: "Content/CSS/"
+        },
+        {
+            src: ["dist/js/*.js"],
+            base: "dist/js/",
+            dest: "Scripts/"
+        },
+        {
+            src: ["dist/locales/*pt-BR*.js"],
+            base: "dist/locales/",
+            dest: "Scripts/"
+        }
     ]
 };
 
@@ -101,8 +118,9 @@ gulp.task('clean-packages', function()
         'Content/Fonts/**',
         '!Content/Fonts',
         'Scripts/**',
-        '!Scripts'
-        ],
+        '!Scripts',
+        '!Scripts/Site.js'
+    ],
         { cwd: paths.projectRoot }
     )
     .then(paths =>

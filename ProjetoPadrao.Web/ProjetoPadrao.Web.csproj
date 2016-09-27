@@ -191,6 +191,14 @@
   <ItemGroup>
     <Content Include="Areas\Administrativo\Scripts\Categorias.js" />
     <Content Include="Areas\Administrativo\Scripts\Conteudos.js" />
+    <Content Include="Content\CSS\bootstrap-datepicker.css" />
+    <Content Include="Content\CSS\bootstrap-datepicker.min.css" />
+    <Content Include="Content\CSS\bootstrap-datepicker.standalone.css" />
+    <Content Include="Content\CSS\bootstrap-datepicker.standalone.min.css" />
+    <Content Include="Content\CSS\bootstrap-datepicker3.css" />
+    <Content Include="Content\CSS\bootstrap-datepicker3.min.css" />
+    <Content Include="Content\CSS\bootstrap-datepicker3.standalone.css" />
+    <Content Include="Content\CSS\bootstrap-datepicker3.standalone.min.css" />
     <Content Include="Content\CSS\bootstrap-theme.css" />
     <Content Include="Content\CSS\bootstrap-theme.min.css" />
     <Content Include="Content\CSS\bootstrap.css" />
@@ -569,6 +577,9 @@
     <Content Include="Scripts\ace\worker-xquery.js" />
     <Content Include="Scripts\additional-methods.js" />
     <Content Include="Scripts\additional-methods.min.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
+    <Content Include="Scripts\bootstrap-datepicker.pt-BR.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
@@ -1037,6 +1048,14 @@
     <Content Include="Areas\Administrativo\Views\Categorias\ArvoreCategorias.cshtml" />
     <Content Include="Areas\Administrativo\Views\Categorias\NovoEditar.cshtml" />
     <Content Include="Areas\Administrativo\Views\Conteudos\Index.cshtml" />
+    <Content Include="Content\CSS\bootstrap-datepicker.css.map" />
+    <Content Include="Content\CSS\bootstrap-datepicker.min.css.map" />
+    <Content Include="Content\CSS\bootstrap-datepicker.standalone.css.map" />
+    <Content Include="Content\CSS\bootstrap-datepicker.standalone.min.css.map" />
+    <Content Include="Content\CSS\bootstrap-datepicker3.css.map" />
+    <Content Include="Content\CSS\bootstrap-datepicker3.min.css.map" />
+    <Content Include="Content\CSS\bootstrap-datepicker3.standalone.css.map" />
+    <Content Include="Content\CSS\bootstrap-datepicker3.standalone.min.css.map" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
