@@ -175,6 +175,7 @@
     <Compile Include="Areas\Administrativo\Controllers\HomeController.cs" />
     <Compile Include="Areas\Administrativo\Controllers\TemplatesController.cs" />
     <Compile Include="Areas\Administrativo\Models\Categoria.cs" />
+    <Compile Include="Areas\Administrativo\Models\Conteudo.cs" />
     <Compile Include="Areas\Administrativo\Models\Template.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1048,6 +1049,7 @@
     <Content Include="Areas\Administrativo\Views\Categorias\ArvoreCategorias.cshtml" />
     <Content Include="Areas\Administrativo\Views\Categorias\NovoEditar.cshtml" />
     <Content Include="Areas\Administrativo\Views\Conteudos\Index.cshtml" />
+    <Content Include="Areas\Administrativo\Views\Conteudos\NovoEditar.cshtml" />
     <Content Include="Content\CSS\bootstrap-datepicker.css.map" />
     <Content Include="Content\CSS\bootstrap-datepicker.min.css.map" />
     <Content Include="Content\CSS\bootstrap-datepicker.standalone.css.map" />

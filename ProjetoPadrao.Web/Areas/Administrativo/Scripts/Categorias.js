@@ -199,7 +199,7 @@ function salvarArvoreCategorias()
             },
             error: function (xhr, status, error)
             {
-
+                ModalMessage("Erro", "Erro ao salvar os dados das categorias.", "Ok");
             },
             complete: function (xhr, status)
             {
@@ -333,7 +333,7 @@ function salvarFormularioCategoria(formulario, acao)
         },
         error: function (xhr, status, error)
         {
-
+            ModalMessage("Erro", "Erro ao salvar os dados da categoria.", "Ok");
         },
         complete: function (xhr, status)
         {
