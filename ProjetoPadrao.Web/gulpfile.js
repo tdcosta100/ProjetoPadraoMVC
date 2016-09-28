@@ -5,6 +5,8 @@ Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 
 var gulp = require('gulp');
 var del = require('del');
+var rename = require('gulp-rename');
+var util = require('gulp-util');
 
 var paths = {
     packageRoot: "./bower_components/",
@@ -90,20 +92,28 @@ var packages = {
             dest: "Scripts/"
         }
     ],
-    "bootstrap-datepicker": [
+    "moment": [
         {
-            src: ["dist/css/**"],
-            base: "dist/css/",
-            dest: "Content/CSS/"
-        },
-        {
-            src: ["dist/js/*.js"],
-            base: "dist/js/",
+            src: ["min/moment.min.js"],
+            base: "min/",
             dest: "Scripts/"
         },
         {
-            src: ["dist/locales/*pt-BR*.js"],
-            base: "dist/locales/",
+            src: ["locale/pt-br.js"],
+            base: "locale/",
+            rename: "moment.locale.pt-br.js",
+            dest: "Scripts/"
+        }
+    ],
+    "eonasdan-bootstrap-datetimepicker": [
+        {
+            src: ["build/css/**"],
+            base: "build/css/",
+            dest: "Content/CSS/"
+        },
+        {
+            src: ["build/js/*.js"],
+            base: "build/js/",
             dest: "Scripts/"
         }
     ]
@@ -119,7 +129,9 @@ gulp.task('clean-packages', function()
         '!Content/Fonts',
         'Scripts/**',
         '!Scripts',
-        '!Scripts/Site.js'
+        '!Scripts/Site.js',
+        '!Scripts/ace',
+		'!Scripts/ace/theme-visualstudio.js'
     ],
         { cwd: paths.projectRoot }
     )
@@ -138,6 +150,7 @@ gulp.task('copy-packages', function ()
             console.log("Processing package " + packageName + "...");
 
             gulp.src(packageItem.src, { cwd: paths.packageRoot + "/" + packageName, base: paths.packageRoot + "/" + packageName + "/" + packageItem.base })
+            .pipe((typeof(packageItem.rename) !== "undefined") ? rename(packageItem.rename) : util.noop())
             .pipe(gulp.dest(packageItem.dest, { cwd: paths.projectRoot }));
 
             console.log("Done!\n");

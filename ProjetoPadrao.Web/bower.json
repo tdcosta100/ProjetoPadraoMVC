@@ -12,7 +12,8 @@
     "ace-builds": "1.2.5",
     "jstree": "3.3.2",
     "jstree-bootstrap-theme": "1.0.1",
-    "bootstrap-datepicker": "1.6.4"
+    "moment": "2.15.1",
+    "eonasdan-bootstrap-datetimepicker": "4.17.42"
   },
   "resolutions": {
     "bootstrap": "3.3.7",
