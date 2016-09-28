@@ -1,5 +1,13 @@
 ﻿jQuery(function ($)
 {
+    if (typeof (jQuery.validator) !== "undefined" && typeof (moment) === "function")
+    {
+        jQuery.validator.methods["date"] = function (value, element)
+        {
+            return this.optional(element) || moment(value, "DD/MM/YYYY HH:mm:ss").isValid();
+        };
+    }
+
     $(document).on("click", "a[href='#']", function (event)
     {
         event.preventDefault();
