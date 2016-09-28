@@ -18,6 +18,9 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
         [HttpGet]
         public ActionResult Novo(bool? carregarFormulario, Models.ConteudoNovo model)
         {
+            ViewBag.Idiomas = IdiomaDAO.Listar();
+            ViewBag.Templates = TemplateDAO.Listar();
+
             ModelState.Clear();
 
             return PartialView("NovoEditar", model);
@@ -34,6 +37,7 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                     URL = model.URL,
                     Chamada = model.Chamada,
                     HTML = model.HTML,
+                    DataCriacao = DateTime.Now,
                     DataPublicacao = model.DataPublicacao,
                     Ativo = model.Ativo,
                     IdCategoria = model.IdCategoria.Value,
@@ -49,6 +53,72 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                 ConteudoDAO.Inserir(conteudo);
 
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.Accepted);
+            }
+
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [HttpGet]
+        public ActionResult Editar(int? id)
+        {
+            if (id.HasValue)
+            {
+                var conteudo = ConteudoDAO.BuscarPorChave(id.Value);
+
+                if (conteudo != null)
+                {
+                    var model = new Models.ConteudoEditar
+                    {
+                        IdConteudo = conteudo.IdConteudo,
+                        Titulo = conteudo.Titulo,
+                        URL = conteudo.URL,
+                        Chamada = conteudo.Chamada,
+                        HTML = conteudo.HTML,
+                        DataPublicacao = conteudo.DataPublicacao,
+                        Ativo = conteudo.Ativo,
+                        IdCategoria = conteudo.IdCategoria,
+                        IdTemplate = conteudo.IdTemplate,
+                        IdArquivoImagemChamada = conteudo.IdArquivoImagemChamada,
+                        IdGrupoIdioma = conteudo.IdGrupoIdioma,
+                        IdIdioma = conteudo.IdIdioma
+                    };
+
+                    ViewBag.Idiomas = IdiomaDAO.Listar();
+                    ViewBag.Templates = TemplateDAO.Listar();
+
+                    return PartialView("NovoEditar", model);
+                }
+            }
+
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [HttpPost]
+        public ActionResult Editar(Models.ConteudoEditar model)
+        {
+            if (ModelState.IsValid)
+            {
+                var conteudo = ConteudoDAO.BuscarPorChave(model.IdConteudo.Value);
+
+                if (conteudo != null)
+                {
+                    conteudo.Titulo = model.Titulo;
+                    conteudo.URL = model.URL;
+                    conteudo.Chamada = model.Chamada;
+                    conteudo.HTML = model.HTML;
+                    conteudo.DataModificacao = DateTime.Now;
+                    conteudo.DataPublicacao = model.DataPublicacao;
+                    conteudo.Ativo = model.Ativo;
+                    conteudo.IdCategoria = model.IdCategoria.Value;
+                    conteudo.IdTemplate = model.IdTemplate.Value;
+                    conteudo.IdArquivoImagemChamada = model.IdArquivoImagemChamada;
+                    conteudo.IdIdioma = model.IdIdioma.Value;
+                    conteudo.IdGrupoIdioma = model.IdGrupoIdioma.Value;
+
+                    ConteudoDAO.SalvarAlteracoesPendentes();
+
+                    return new HttpStatusCodeResult(System.Net.HttpStatusCode.Accepted);
+                }
             }
 
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);

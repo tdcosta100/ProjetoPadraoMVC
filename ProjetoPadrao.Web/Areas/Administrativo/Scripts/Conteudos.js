@@ -27,6 +27,30 @@
             }
         });
     });
+
+    $(document).on("click", ".btn-editar-conteudo", function (event)
+    {
+        event.preventDefault();
+
+        $("#modal-carregando").modal("show");
+
+        $.ajax({
+            type: "GET",
+            url: $(this).attr("href"),
+            success: function (data, status, xhr)
+            {
+                configurarFormularioConteudo("editar", data);
+            },
+            error: function (xhr, status, error)
+            {
+                ModalMessage("Erro", "Erro ao carregar o formulário do conteúdo.", "Ok");
+            },
+            complete: function (xhr, status)
+            {
+                $("#modal-carregando").modal("hide");
+            }
+        });
+    });
 });
 
 function itemMenuConteudos(data)
@@ -70,7 +94,7 @@ function configurarListaConteudos(dados, idCategoria, nomeCategoria)
     {
         var modal = Modal({
             attributes: {
-                id: "#lista-conteudos"
+                id: "lista-conteudos"
             },
             title: "Conteúdos - <span class=\"nome-categoria\">" + nomeCategoria + "</span>",
             content: dados,
@@ -142,21 +166,31 @@ function configurarFormularioConteudo(acao, dados)
         });
     });
 
-    $(":input[type=datetime]").datepicker({
-        todayBtn: "linked",
-        language: "pt-BR",
-        autoclose: true,
-        todayHighlight: true
+    $(":input[type=datetime]", modal).each(function ()
+    {
+        var element = $(this);
+
+        if ($(this).parent().hasClass("input-group"))
+        {
+            element = $(this).parent();
+        }
+
+        element.datetimepicker({
+            locale: "pt-br",
+            format: "DD/MM/YYYY HH:mm",
+            sideBySide: true
+        })
     });
 
     $("#IdCategoria", modal).on("change", function ()
     {
         $(":input[name=IdIdioma]", modal).val($("#IdCategoria optgroup:has(option:selected)", modal).data("idIdioma"));
-    });
+    })
+    .trigger("change");
 
     $("form", modal).data("validator").settings.submitHandler = function (form)
     {
-        salvarFormularioCategoria.apply(modal, [form, acao]);
+        salvarFormularioConteudo.apply(modal, [form, acao]);
     };
 
     modal.modal("show");
@@ -249,7 +283,17 @@ function finalizarFormularioConteudo()
             }
         }
 
-        $(":input[type=datetime]", modal).datepicker("destroy");
+        $(":input[type=datetime]", modal).each(function ()
+        {
+            var element = $(this);
+
+            if ($(this).parent().hasClass("input-group"))
+            {
+                element = $(this).parent();
+            }
+
+            element.datetimepicker("destroy");
+        });
     });
 
     $(modal).removeData(["closeConfirmed"]);

@@ -29,6 +29,7 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Models
         public string HTML { get; set; }
 
         [Display(Name = "Data de Publicação")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime? DataPublicacao { get; set; }
 
         [Display(Name = "Ativo")]

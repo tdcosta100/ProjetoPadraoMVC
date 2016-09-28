@@ -1,7 +1,13 @@
 ﻿@model ProjetoPadrao.Web.Areas.Administrativo.Models.ConteudoNovo
 
 @{ 
-    var editar = Model is ProjetoPadrao.Web.Areas.Administrativo.Models.ConteudoEditar;
+    var idiomas = ViewBag.Idiomas as IQueryable<ProjetoPadrao.Dados.Entidades.Idioma>;
+    var templates = ViewBag.Templates as IQueryable<ProjetoPadrao.Dados.Entidades.Template>;
+
+    var atributos = new Dictionary<string, object> { { "class", "form-control" } };
+    var atributosSomenteLeitura = new Dictionary<string, object> { { "readonly", null } };
+    var atributosDesabilitado = new Dictionary<string, object> { { "disabled", null } };
+    var optGroupsIdiomas = idiomas.ToDictionary(i => i.IdIdioma, i => new SelectListGroup { Name = i.Nome });
 }
 
 @using (Html.BeginForm()) 
@@ -11,7 +17,7 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         
-        @if (editar)
+        @if (Model is ProjetoPadrao.Web.Areas.Administrativo.Models.ConteudoEditar)
         {
             @Html.HiddenFor(model => (model as ProjetoPadrao.Web.Areas.Administrativo.Models.ConteudoEditar).IdConteudo)
             @Html.HiddenFor(model => (model as ProjetoPadrao.Web.Areas.Administrativo.Models.ConteudoEditar).IdGrupoIdioma)
@@ -52,7 +58,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DataPublicacao, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DataPublicacao, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="input-group date" style="width: 280px;">
+                    @Html.EditorFor(model => model.DataPublicacao, new { htmlAttributes = new { @class = "form-control" } })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
                 @Html.ValidationMessageFor(model => model.DataPublicacao, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -70,7 +81,18 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdCategoria, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdCategoria, new { htmlAttributes = new { @class = "form-control" } })
+                <select class="form-control" data-val="true" data-val-number="The field Categoria Pai must be a number." data-val-required="O campo Categoria Pai é obrigatório." id="IdCategoria" name="IdCategoria">
+                    <option value="">Selecione uma categoria</option>
+                    @foreach (var idioma in idiomas)
+                    {
+                        <optgroup label="@idioma.Nome" data-id-idioma="@idioma.IdIdioma">
+                            @foreach (var categoria in idioma.Categorias)
+                            {
+                                <option value="@categoria.IdCategoria" @((Model != null && Model.IdCategoria.HasValue && Model.IdCategoria.Value == categoria.IdCategoria) ? " selected" : null)>@categoria.Nome</option>
+                            }
+                        </optgroup>
+                    }
+                </select>
                 @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -78,7 +100,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdTemplate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdTemplate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.IdTemplate, templates.Select(t => new SelectListItem { Value = t.IdTemplate.ToString(), Text = t.Nome }), "Selecione um template", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdTemplate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -94,7 +116,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdIdioma, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdIdioma, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.IdIdioma, idiomas.Select(i => new SelectListItem { Value = i.IdIdioma.ToString(), Text = i.Nome }), "Selecione uma categoria", atributos.Concat(atributosDesabilitado).ToDictionary(a => a.Key, a => a.Value))
+                @Html.HiddenFor(model => model.IdIdioma)
                 @Html.ValidationMessageFor(model => model.IdIdioma, "", new { @class = "text-danger" })
             </div>
         </div>
