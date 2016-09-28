@@ -178,6 +178,7 @@
     <Compile Include="Areas\Administrativo\Models\Conteudo.cs" />
     <Compile Include="Areas\Administrativo\Models\Template.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ConteudoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1030,6 +1031,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Conteudo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -13,12 +13,20 @@ namespace ProjetoPadrao.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+			/*
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 namespaces: new[] { "ProjetoPadrao.Web.Controllers" }
             );
+			*/
+
+			routes.MapRoute(
+				name: "Conteudo",
+				url: "{*path}",
+				defaults: new { controller = "Conteudo", action = "Index" }
+			);
         }
     }
 }
