@@ -101,6 +101,7 @@
     <Compile Include="Entidades\Documento.cs">
       <DependentUpon>ProjetoPadrao.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Extensoes\Conteudo.cs" />
     <Compile Include="Entidades\Galeria.cs">
       <DependentUpon>ProjetoPadrao.tt</DependentUpon>
     </Compile>
