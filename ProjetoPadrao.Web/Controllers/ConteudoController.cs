@@ -1,4 +1,5 @@
 ﻿using ProjetoPadrao.Dados.DAO;
+using ProjetoPadrao.Dados.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,46 +10,32 @@ namespace ProjetoPadrao.Web.Controllers
 {
     public class ConteudoController : Controller
     {
-        public ActionResult Index(string path)
-        {
-			var categoria = CategoriaDAO.Listar().FirstOrDefault(c => !c.IdCategoriaPai.HasValue && c.URL == "home-pt-br");
+		private static Dictionary<string, Tuple<int, string>> _PathCache = new Dictionary<string, Tuple<int, string>>();
 
+		public ActionResult Index(string path)
+        {
 			if (path == null)
 			{
+				var categoria = CategoriaDAO.Listar().FirstOrDefault(c => c.Ativa && !c.IdCategoriaPai.HasValue && c.URL == "home-pt-br");
+
 				return View(string.Format("Templates/{0}", categoria.Template.Alias), categoria);
 			}
 			else
 			{
-				var segments = new Stack<string>(path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Reverse());
+				var objetoCaminho = Util.CacheCaminho.ObterObjetoCaminho(path);
 
-				while (segments.Count > 0)
+				if (objetoCaminho != null)
 				{
-					if (segments.Count == 1)
+					switch (objetoCaminho.Item2)
 					{
-						var conteudo = categoria.Conteudos.FirstOrDefault(c => c.URL == segments.Peek());
-
-						if (conteudo != null)
-						{
+						case "categoria":
+							var categoria = objetoCaminho.Item1 as Categoria;
+							return View(string.Format("Templates/{0}", categoria.Template.Alias), categoria);
+						case "conteudo":
+							var conteudo = objetoCaminho.Item1 as Conteudo;
 							return View(string.Format("Templates/{0}", conteudo.Template.Alias), conteudo);
-						}
-						else
-						{
-							categoria = categoria.Subcategorias.FirstOrDefault(sub => sub.URL == segments.Pop());
-
-							if (categoria != null)
-							{
-								return View(string.Format("Templates/{0}", categoria.Template.Alias), categoria);
-							}
-						}
-					}
-					else
-					{
-						categoria = categoria.Subcategorias.FirstOrDefault(sub => sub.URL == segments.Pop());
-					}
-
-					if (categoria == null)
-					{
-						break;
+						default:
+							break;
 					}
 				}
 			}

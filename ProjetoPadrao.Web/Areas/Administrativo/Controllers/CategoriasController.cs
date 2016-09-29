@@ -62,6 +62,7 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                 };
 
                 CategoriaDAO.Inserir(categoria);
+				Util.CacheCaminho.LimparCache();
 
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.Accepted);
             }
@@ -136,6 +137,11 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                                 subcategoria.IdIdioma = currentEnumerator.Current.IdIdioma;
                             }
 
+							foreach (var conteudo in currentEnumerator.Current.Conteudos)
+							{
+								conteudo.IdIdioma = currentEnumerator.Current.IdIdioma;
+							}
+
                             pilhaArvore.Push(currentEnumerator.Current.Subcategorias.GetEnumerator());
                         }
                     }
@@ -146,6 +152,7 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                 } while (pilhaArvore.Count > 0);
 
                 CategoriaDAO.SalvarAlteracoesPendentes();
+				Util.CacheCaminho.LimparCache();
 
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.Accepted);
             }
@@ -189,6 +196,11 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                                     categoria.Subcategorias.Add(subcategoria);
                                 }
 
+								foreach (var conteudo in categoria.Conteudos)
+								{
+									conteudo.IdIdioma = categoria.IdIdioma;
+								}
+
                                 pilhaArvore.Push(lookupModels[currentEnumerator.Current.IdCategoria].GetEnumerator());
                             }
                         }
@@ -199,19 +211,13 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                     } while (pilhaArvore.Count > 0);
 
                     CategoriaDAO.SalvarAlteracoesPendentes();
+					Util.CacheCaminho.LimparCache();
 
                     return new HttpStatusCodeResult(System.Net.HttpStatusCode.Accepted);
                 }
             }
 
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-        }
-
-        public ActionResult Teste()
-        {
-            var teste = CategoriaDAO.Listar().ToLookup(c => c.IdCategoriaPai);
-
-            return new HttpStatusCodeResult(System.Net.HttpStatusCode.Accepted);
         }
     }
 }
