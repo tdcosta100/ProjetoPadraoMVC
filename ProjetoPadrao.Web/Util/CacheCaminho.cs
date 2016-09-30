@@ -122,11 +122,13 @@ namespace ProjetoPadrao.Web.Util
                 }
 
                 resultado = string.Join("/", segmentos);
+
+				_CacheCaminho[resultado] = new Tuple<int, string>(idObjeto, tipoObjeto);
             }
 
             if (resultado != null)
             {
-                resultado = string.Format("~/{0}", resultado);
+				resultado = string.Format("~/{0}", resultado);
 
                 if (absoluto)
                 {

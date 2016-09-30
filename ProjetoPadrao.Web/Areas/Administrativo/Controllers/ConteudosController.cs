@@ -116,6 +116,7 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                     conteudo.IdGrupoIdioma = model.IdGrupoIdioma.Value;
 
                     ConteudoDAO.SalvarAlteracoesPendentes();
+					Util.CacheCaminho.LimparCache();
 
                     return new HttpStatusCodeResult(System.Net.HttpStatusCode.Accepted);
                 }
