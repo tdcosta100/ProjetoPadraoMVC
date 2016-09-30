@@ -184,6 +184,13 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
                             var subModels = lookupModels[currentEnumerator.Current.IdCategoria];
                             var categoria = categorias[currentEnumerator.Current.IdCategoria.Value];
 
+                            categoria.Ordem = currentEnumerator.Current.Ordem.Value;
+
+                            foreach (var conteudo in categoria.Conteudos)
+                            {
+                                conteudo.Idioma = categoria.Idioma;
+                            }
+
                             categoria.Subcategorias.Clear();
 
                             if (subModels.Any())
@@ -195,11 +202,6 @@ namespace ProjetoPadrao.Web.Areas.Administrativo.Controllers
 
                                     categoria.Subcategorias.Add(subcategoria);
                                 }
-
-								foreach (var conteudo in categoria.Conteudos)
-								{
-									conteudo.IdIdioma = categoria.IdIdioma;
-								}
 
                                 pilhaArvore.Push(lookupModels[currentEnumerator.Current.IdCategoria].GetEnumerator());
                             }
