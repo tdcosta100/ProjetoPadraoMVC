@@ -1,4 +1,5 @@
 ﻿using ProjetoPadrao.Dados.DAO;
+using ProjetoPadrao.Dados.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +77,67 @@ namespace ProjetoPadrao.Web.Util
 
 			return resultado;
 		}
+
+        public static string ObterCaminhoObjeto(int idObjeto, string tipoObjeto, bool absoluto = true)
+        {
+            var resultado = _CacheCaminho.Where(c => c.Value.Item1 == idObjeto && c.Value.Item2 == tipoObjeto).Select(c => c.Key).FirstOrDefault();
+
+            if (resultado == null)
+            {
+                Categoria categoria = null;
+                Stack<string> segmentos = new Stack<string>();
+
+                switch (tipoObjeto)
+                {
+                    case "categoria":
+                        categoria = CategoriaDAO.BuscarPorChave(idObjeto);
+
+                        if (categoria == null)
+                        {
+                            return null;
+                        }
+                        break;
+                    case "conteudo":
+                        var conteudo = ConteudoDAO.BuscarPorChave(idObjeto);
+
+                        if (conteudo != null)
+                        {
+                            categoria = conteudo.Categoria;
+                            segmentos.Push(conteudo.URL);
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                while (categoria != null && categoria.CategoriaPai != null)
+                {
+                    segmentos.Push(categoria.URL);
+
+                    categoria = categoria.CategoriaPai;
+                }
+
+                resultado = string.Join("/", segmentos);
+            }
+
+            if (resultado != null)
+            {
+                resultado = string.Format("~/{0}", resultado);
+
+                if (absoluto)
+                {
+                    var url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+
+                    resultado = url.Content(resultado);
+                }
+            }
+
+            return resultado;
+        }
 
 		public static void LimparCache()
 		{

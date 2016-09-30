@@ -189,7 +189,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Util\PathCache.cs" />
+    <Compile Include="Util\CacheCaminho.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Administrativo\Scripts\Categorias.js" />

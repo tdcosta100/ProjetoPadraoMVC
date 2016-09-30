@@ -23,6 +23,18 @@ textarea {
     max-width: 280px;
 }
 
+.caret-right {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-left: 4px dashed;
+    border-left: 4px solid \9;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+}
+
 #modal-carregando {
     text-align: center;
 }
