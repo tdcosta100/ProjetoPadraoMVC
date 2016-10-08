@@ -93,12 +93,13 @@ PRINT N'Creating [dbo].[Arquivo]...';
 
 GO
 CREATE TABLE [dbo].[Arquivo] (
-    [IdArquivo]   INT            IDENTITY (1, 1) NOT NULL,
-    [Nome]        NVARCHAR (255) NOT NULL,
-    [Extensao]    NVARCHAR (10)  NOT NULL,
-    [Tamanho]     BIGINT         NOT NULL,
-    [Descricao]   NTEXT          NULL,
-    [TipoArquivo] NVARCHAR (10)  NOT NULL,
+    [IdArquivo]    INT            IDENTITY (1, 1) NOT NULL,
+    [Nome]         NVARCHAR (255) NOT NULL,
+    [NomeOriginal] NVARCHAR (255) NOT NULL,
+    [Extensao]     NVARCHAR (10)  NOT NULL,
+    [Tamanho]      BIGINT         NOT NULL,
+    [Descricao]    NTEXT          NULL,
+    [TipoArquivo]  NVARCHAR (10)  NOT NULL,
     CONSTRAINT [PK_Arquivo] PRIMARY KEY CLUSTERED ([IdArquivo] ASC)
 );
 

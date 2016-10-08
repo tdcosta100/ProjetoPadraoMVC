@@ -11,6 +11,7 @@
           </Key>
           <Property Name="IdArquivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nome" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="NomeOriginal" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Extensao" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Tamanho" Type="bigint" Nullable="false" />
           <Property Name="Descricao" Type="ntext" />
@@ -471,6 +472,7 @@
           </Key>
           <Property Name="IdArquivo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NomeOriginal" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Extensao" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Tamanho" Type="Int64" Nullable="false" />
           <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -857,6 +859,7 @@
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
                 <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
                 <ScalarProperty Name="Extensao" ColumnName="Extensao" />
+                <ScalarProperty Name="NomeOriginal" ColumnName="NomeOriginal" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
               </MappingFragment>
             </EntityTypeMapping>

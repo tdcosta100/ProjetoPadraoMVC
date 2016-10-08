@@ -16,6 +16,7 @@ namespace ProjetoPadrao.Dados.Entidades
     {
         public int IdArquivo { get; set; }
         public string Nome { get; set; }
+        public string NomeOriginal { get; set; }
         public string Extensao { get; set; }
         public long Tamanho { get; set; }
         public string Descricao { get; set; }
