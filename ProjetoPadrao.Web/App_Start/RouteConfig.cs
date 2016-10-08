@@ -12,8 +12,10 @@ namespace ProjetoPadrao.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("Content/{*path}");
+            routes.IgnoreRoute("Scripts/{*path}");
 
-			/*
+            /*
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
@@ -21,8 +23,15 @@ namespace ProjetoPadrao.Web
                 namespaces: new[] { "ProjetoPadrao.Web.Controllers" }
             );
 			*/
+            routes.RouteExistingFiles = true;
 
-			routes.MapRoute(
+            routes.MapRoute(
+                name: "Imagem",
+                url: "Images/Upload/{*nome}",
+                defaults: new { controller = "Imagem", action = "Index" }
+            );
+
+            routes.MapRoute(
 				name: "Conteudo",
 				url: "{*path}",
 				defaults: new { controller = "Conteudo", action = "Index" }
