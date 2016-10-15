@@ -35,6 +35,23 @@ namespace ProjetoPadrao.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var timer = new System.Timers.Timer(12 * 60 * 60 * 1000)
+            {
+                AutoReset = true
+            };
+
+            timer.Elapsed += (sender, e) =>
+            {
+                Controllers.ImagemController.LimparCache();
+            };
+
+            timer.Start();
+
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                Controllers.ImagemController.LimparCache();
+            });
         }
     }
 }
